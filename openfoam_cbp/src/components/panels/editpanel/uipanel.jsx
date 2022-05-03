@@ -203,7 +203,7 @@ const BlockMeshDict1D = ({ast, editMaterials, allASTs, editor}) => {
                 <Table.Cell>{[i+1]}</Table.Cell>
                 <Table.Cell><Input style={{"width": "70px"}} className={isValidFloat(segmentLens[i])?null:"error"} onChange={(event) => handleLensChange(event, i)} defaultValue={segmentLens[i]} /></Table.Cell>
                 <Table.Cell><Input style={{"width": "70px"}} className={isValidInt(segmentCells[i])?null:"error"} onChange={(event) => handleCellsChange(event, i)} defaultValue={segmentCells[i]}/></Table.Cell>
-                <Table.Cell><Input style={{"width": "200px"}} className={isValidFloat(segmentCells[i])?null:"error"} onChange={(event) => handleRatiosChange(event, i)} defaultValue={segmentRatios[i]}/></Table.Cell>
+                <Table.Cell><Input style={{"width": "70px"}} className={isValidFloat(segmentCells[i])?null:"error"} onChange={(event) => handleRatiosChange(event, i)} defaultValue={segmentRatios[i]}/></Table.Cell>
             </Table.Row>)
         }
         return layers
