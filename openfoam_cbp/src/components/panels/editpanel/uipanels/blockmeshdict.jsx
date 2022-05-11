@@ -45,7 +45,7 @@ export const BlockMeshDictBackground = ({ast, editABL, editor}) => {
             <Table.Body>
                 <Table.Row>
                     <Table.Cell>X</Table.Cell>
-                    <Table.Cell><Input style={{"width": "70px"}} className={isValidFloa(backGroundMesh.xMin)?null:"error"} onChange={(e) => setBackGroundMesh({...backGroundMesh, xMin: e.target.value})} defaultValue={backGroundMesh.xMin} /></Table.Cell>
+                    <Table.Cell><Input style={{"width": "70px"}} className={isValidFloat(backGroundMesh.xMin)?null:"error"} onChange={(e) => setBackGroundMesh({...backGroundMesh, xMin: e.target.value})} defaultValue={backGroundMesh.xMin} /></Table.Cell>
                     <Table.Cell><Input style={{"width": "70px"}} className={isValidFloat(backGroundMesh.xMax)?null:"error"} onChange={(e) => setBackGroundMesh({...backGroundMesh, xMax: e.target.value})} defaultValue={backGroundMesh.xMax} /></Table.Cell>
                     <Table.Cell><Input style={{"width": "70px"}} className={isValidInt(backGroundMesh.xCells)?null:"error"} onChange={(e) => setBackGroundMesh({...backGroundMesh, xCells: e.target.value})} defaultValue={backGroundMesh.xCells} /></Table.Cell>
                 </Table.Row>
