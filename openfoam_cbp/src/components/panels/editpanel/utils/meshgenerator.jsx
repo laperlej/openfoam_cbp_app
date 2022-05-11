@@ -1,6 +1,3 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Button, Message, Dropdown, Input, Table } from 'semantic-ui-react'
-
 function getVertices(nX, nY, nZ, vertexCoordinates){
     let vertices = []
     for (let z=0; z < nZ; z++) {
