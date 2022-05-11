@@ -4,7 +4,7 @@ import Save from '../utils/save.jsx'
 import { generateMesh } from '../utils/meshgenerator.jsx'
 import { isValidFloat, isValidInt } from "../utils/validator.jsx"
 
-export const BlockMeshDictBackground = ({ast, editABL, editor}) => {
+const BlockMeshDictBackground = ({ast, editABL, editor}) => {
     const [backGroundMesh, setBackGroundMesh] = useState({xMin: -20,
         xMax: 330,
         yMin: -50,
@@ -67,7 +67,7 @@ export const BlockMeshDictBackground = ({ast, editABL, editor}) => {
     </>)
 }
 
-export const BlockMeshDict1D = ({ast, editMaterials, allASTs, editor}) => {
+const BlockMeshDict1D = ({ast, editMaterials, allASTs, editor}) => {
     //TODO: make sure to update correctly on nbLayers update
     const [nbLayers, setNbLayers] = useState(3)
     const [segmentLens, setSegmentLens] = useState(["0.365", "0.015", "0.04","1","1","1","1","1","1","1"])
@@ -138,4 +138,23 @@ export const BlockMeshDict1D = ({ast, editMaterials, allASTs, editor}) => {
         </Table><p/>
         <Save vars={vars} onClick={handleClick} isValid={validate()} editor={editor}/>
     </>)
+}
+
+const BoundaryType = ({project, ast, allASTs, editor}) => {
+    return (
+        null
+    )
+}
+
+export const BlockMeshDict = ({project, editMaterials, editABL, ast, allASTs, editor}) => {
+    if (project === "hamFoam") {
+        return (<>
+            <BlockMeshDict1D editMaterials={editMaterials} ast={ast} allASTs={allASTs} editor={editor}/>
+        </>)
+    } else {
+        return (<>
+            <BlockMeshDictBackground editABL={editABL} ast={ast} allASTs={allASTs} editor={editor}/>
+            <BoundaryType project={project} ast={ast} allASTs={allASTs} editor={editor}/>
+        </>)
+    }
 }

@@ -13,15 +13,17 @@ import axios from 'axios';
 import { useMonaco } from "@monaco-editor/react";
 import {data as ham_data} from './project_data/hamstadbenchmarkcase5.jsx'
 import {data as CFD_data} from './project_data/urbanmicroclimatefoam_CFD.jsx'
-import {data as CFDHAM_data} from './project_data/urbanmicroclimatefoam_CFDHAM.jsx'
-import {data as CFDHAMv_data} from './project_data/urbanmicroclimatefoam_CFDHAM_veg.jsx'
+import {data as CFD_obj_data} from './project_data/urbanmicroclimateforam_CFD_obj.jsx'
 import {data as wdrf_data} from './project_data/winddrivenrainfoam.jsx'
+import {data as wdrf_obj_data} from './project_data/winddrivenrainfoam_obj.jsx'
 
 const all_data = {
     "": ham_data,
     "hamFoam": ham_data,
     "urbanMicroclimateFoam": CFD_data,
-    "windDrivenRainFoam": wdrf_data
+    "urbanMicroclimateFoam_obj": CFD_obj_data,
+    "windDrivenRainFoam": wdrf_data,
+    "windDrivenRainFoam_obj": wdrf_obj_data
 }
 
 const snappyHexMeshDict = (root, patchName) => { return {
@@ -77,7 +79,7 @@ const AppRoutes = () => {
     newData[`${root}system`].children.push(`${root}system/surfaceFeaturesDict`)
     newData[`${root}constant`].children.splice(0, 0, `${root}constant/triSurface`)
     newData[`${root}system/meshQualityDict`] = meshQualityDict(root)
-    newData[`${root}system/snappyHexMeshDict`] = snappyHexMeshDict(root, (newProject == "windDrivenRainFoam")?"cube":"buildings")
+    newData[`${root}system/snappyHexMeshDict`] = snappyHexMeshDict(root, "buildings")
     newData[`${root}system/surfaceFeaturesDict`] = surfaceFeaturesDict(root)
     newData[`${root}constant/triSurface`] = triSurface(root)
     newData[`${root}constant/triSurface/buildings.obj`] = objFile(root)
@@ -88,9 +90,12 @@ const AppRoutes = () => {
   }
 
   const setCase = (newProject, objFile) => {
-    let newData = JSON.parse(JSON.stringify(all_data[newProject]))
+    let newData = {};
     if (objFile) {
+      newData = JSON.parse(JSON.stringify(all_data[newProject+"_obj"]))
       newData = addObj(newData, newProject)
+    } else {
+      newData = JSON.parse(JSON.stringify(all_data[newProject]))
     }
     setProject(newProject);
     setData(newData);

@@ -2,7 +2,7 @@ import React from 'react';
 import './uipanel.css'
 import { useMonaco } from "@monaco-editor/react";
 import { ControlDict } from "./uipanels/controldict.jsx"
-import { BlockMeshDict1D, BlockMeshDictBackground } from "./uipanels/blockmeshdict.jsx"
+import { BlockMeshDict } from "./uipanels/blockmeshdict.jsx"
 import { DecomposeParDict } from "./uipanels/decomposepardict.jsx"
 import { HamTransportProperties } from "./uipanels/hamtransportproperties.jsx"
 import { FvSchemes } from "./uipanels/fvschemes.jsx"
@@ -51,7 +51,7 @@ const UIPanel = ({project, selectedItem, data, allASTs, editor}) => {
     const UIdictionary = {
         "controlDict": <ControlDict ast={ast} editor={editor}/>,
         "decomposeParDict": <DecomposeParDict ast={ast} editor={editor}/>,
-        "blockMeshDict": (project==="hamFoam")?<BlockMeshDict1D editMaterials={editMaterials} ast={ast} allASTs={allASTs} editor={editor}/>:<BlockMeshDictBackground editABL={editABLConditons} ast={ast} allASTs={allASTs} editor={editor}/>,
+        "blockMeshDict": <BlockMeshDict project={project} editMaterials={editMaterials} editABL={editABLConditons} ast={ast} allASTs={allASTs} editor={editor}/>,
         "transportProperties": (project==="hamFoam")?<HamTransportProperties ast={ast} editor={editor}/>:null,
         "fvSchemes": <FvSchemes ast={ast} editor={editor}/>,
         "fvSolution": <FvSolution ast={ast} editor={editor}/>,
