@@ -86,7 +86,7 @@ export const HamTransportProperties = ({ast, editor}) => {
         return rho.every(isValidInt) && cap.every(isValidInt) && lambda1.every(isValidFloat) && lambda2.every(isValidFloat)
     }
     return(<>
-        Materials configuration<p/>
+        <p/><h3>Materials configuration</h3><p/>
         <p/>
         <Table compact>
             <Table.Header>

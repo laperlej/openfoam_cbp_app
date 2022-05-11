@@ -23,57 +23,72 @@ class Tokenizer {
         this.init()
         //const text = editor.getModel().getLinesContent()
         const text = rawText.split("\n");
+        let isString = false;
         for (let line=0; line<text.length; line++) {
             ignoreLine:
             for (let column=0; column<text[line].length; column++) {
-                switch (text[line][column]) {
-                    case " ":
-                    case "\t":
-                        this.pushToken();
-                        this.newToken();
-                        break;
-                    case ";":
-                    case "{":
-                    case "}":
-                    case "(":
-                    case ")":
-                        this.pushToken();
-                        this.newToken(text[line][column], text[line][column], [line+1, column+1, line+1, column+2]);
-                        this.pushToken();
-                        this.newToken();
-                        break;
-                    case "/":
-                        if (text[line][column] === "/" && text[line][column+1] === "*") {
-                            this.pushToken();
-                            this.newToken("/*", "/*", [line+1, column+1, line+1, column+3]);
-                            this.pushToken();
-                            this.newToken();
-                            column+=1;
-                            break;
-                        }
-                        if (text[line][column] === "/" && text[line][column+1] === "/") {
-                            this.pushToken();
-                            break ignoreLine;
-                        }
-                    case "*":
-                        if (text[line][column] === "*" && text[line][column+1] === "/") {
-                            this.pushToken();
-                            this.newToken("*/", "*/", [line+1, column+1, line+1, column+3]);
-                            this.pushToken();
-                            this.newToken();
-                            column+=1;
-                            break;
-                        }
-                    default:
-                        if (this.currentToken.value) {
-                            this.currentToken.value += text[line][column];
-                            this.currentToken.range[2] = line+1;
-                            this.currentToken.range[3] = column+2;
-                        } else {
+                if (isString) {
+                    this.currentToken.value += text[line][column];
+                    this.currentToken.range[2] = line+1;
+                    this.currentToken.range[3] = column+2;
+                    if (text[line][column] === '"') {
+                        isString = false
+                        this.pushToken()
+                    }
+                } else {
+                    switch (text[line][column]) {
+                        case '"':
                             this.newToken("val", text[line][column], [line+1, column+1, line+1, column+2]);
-                        }
-                        break;
-                    
+                            isString = true;
+                            break;
+                        case " ":
+                        case "\t":
+                            this.pushToken();
+                            this.newToken();
+                            break;
+                        case ";":
+                        case "{":
+                        case "}":
+                        case "(":
+                        case ")":
+                            this.pushToken();
+                            this.newToken(text[line][column], text[line][column], [line+1, column+1, line+1, column+2]);
+                            this.pushToken();
+                            this.newToken();
+                            break;
+                        case "/":
+                            if (text[line][column] === "/" && text[line][column+1] === "*") {
+                                this.pushToken();
+                                this.newToken("/*", "/*", [line+1, column+1, line+1, column+3]);
+                                this.pushToken();
+                                this.newToken();
+                                column+=1;
+                                break;
+                            }
+                            if (text[line][column] === "/" && text[line][column+1] === "/") {
+                                this.pushToken();
+                                break ignoreLine;
+                            }
+                        case "*":
+                            if (text[line][column] === "*" && text[line][column+1] === "/") {
+                                this.pushToken();
+                                this.newToken("*/", "*/", [line+1, column+1, line+1, column+3]);
+                                this.pushToken();
+                                this.newToken();
+                                column+=1;
+                                break;
+                            }
+                        default:
+                            if (this.currentToken.value) {
+                                this.currentToken.value += text[line][column];
+                                this.currentToken.range[2] = line+1;
+                                this.currentToken.range[3] = column+2;
+                            } else {
+                                this.newToken("val", text[line][column], [line+1, column+1, line+1, column+2]);
+                            }
+                            break;
+                        
+                    }
                 }
             }
         }

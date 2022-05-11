@@ -9,7 +9,7 @@ class DataStore {
         this.dataStore[id] = {
             runStatusListener: new StatusListener("not started"),
             postStatusListener: new StatusListener("not started"),
-            childProcesses: {run :null, vtk:null},
+            childProcesses: {run: null, vtk: null},
             caseDir: null,
             caseName: null,
             obj: null
