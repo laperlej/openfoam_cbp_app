@@ -140,12 +140,6 @@ const BlockMeshDict1D = ({ast, editMaterials, allASTs, editor}) => {
     </>)
 }
 
-const BoundaryType = ({project, ast, allASTs, editor}) => {
-    return (
-        null
-    )
-}
-
 export const BlockMeshDict = ({project, editMaterials, editABL, ast, allASTs, editor}) => {
     if (project === "hamFoam") {
         return (<>
@@ -154,7 +148,6 @@ export const BlockMeshDict = ({project, editMaterials, editABL, ast, allASTs, ed
     } else {
         return (<>
             <BlockMeshDictBackground editABL={editABL} ast={ast} allASTs={allASTs} editor={editor}/>
-            <BoundaryType project={project} ast={ast} allASTs={allASTs} editor={editor}/>
         </>)
     }
 }

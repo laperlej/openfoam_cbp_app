@@ -11,11 +11,9 @@ const RunPanel = ({project, data, tmpFolder, setFolder}) => {
     let navigate = useNavigate();
     const runSolver = () => {
       function postCase() {
-        try {
-          axios.post("/api/sendcase", {caseFiles: data, caseName: project, multiProcessing: multiProcessing, latestTime: latestTime}).then((response)=>{setFolder(response.data)});
-        } catch (err) {
-          console.error(err);
-        }
+        axios.post("/api/sendcase", {caseFiles: data, caseName: project, multiProcessing: multiProcessing, latestTime: latestTime})
+          .then((response)=>{setFolder(response.data)})
+          .catch((err)=>console.error(err))
       }
       postCase();
       navigate('/log');

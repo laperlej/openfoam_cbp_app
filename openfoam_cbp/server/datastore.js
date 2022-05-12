@@ -15,17 +15,17 @@ class DataStore {
             obj: null
         };
         return this.dataStore[id]
-    };
+    }
 
     getSession(id) {
         if (id in this.dataStore) {
-            return this.dataStore[id];
-        };
+            return this.dataStore[id]
+        }
         return this.init_session(id)
     }
 }
 
-dataStore = new DataStore()
+let dataStore = new DataStore()
 
 
 module.exports = {

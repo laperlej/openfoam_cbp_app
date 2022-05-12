@@ -7,6 +7,9 @@ import { DecomposeParDict } from "./uipanels/decomposepardict.jsx"
 import { HamTransportProperties } from "./uipanels/hamtransportproperties.jsx"
 import { FvSchemes } from "./uipanels/fvschemes.jsx"
 import { FvSolution } from "./uipanels/fvsolution.jsx"
+import { Turbulence } from "./uipanels/Turbulence.jsx"
+import { Conditions } from "./uipanels/conditions.jsx"
+
 
 const UIPanel = ({project, selectedItem, data, allASTs, editor}) => {
     const fileData = data[selectedItem]
@@ -48,17 +51,22 @@ const UIPanel = ({project, selectedItem, data, allASTs, editor}) => {
         data[indexTransportProperties]["text"] = newTransportProperties.join("\n")
     }
 
-    const UIdictionary = {
-        "controlDict": <ControlDict ast={ast} editor={editor}/>,
-        "decomposeParDict": <DecomposeParDict ast={ast} editor={editor}/>,
-        "blockMeshDict": <BlockMeshDict project={project} editMaterials={editMaterials} editABL={editABLConditons} ast={ast} allASTs={allASTs} editor={editor}/>,
-        "transportProperties": (project==="hamFoam")?<HamTransportProperties ast={ast} editor={editor}/>:null,
-        "fvSchemes": <FvSchemes ast={ast} editor={editor}/>,
-        "fvSolution": <FvSolution ast={ast} editor={editor}/>,
+    const uiDictionary = (filename) => {
+        switch (filename) {
+            case "controlDict": return <ControlDict ast={ast} editor={editor}/>
+            case "decomposeParDict": return <DecomposeParDict ast={ast} editor={editor}/>
+            case "blockMeshDict": return <BlockMeshDict project={project} editMaterials={editMaterials} editABL={editABLConditons} ast={ast} allASTs={allASTs} editor={editor}/>
+            case "transportProperties": return (project==="hamFoam")?<HamTransportProperties ast={ast} editor={editor}/>:null
+            case "fvSchemes": return <FvSchemes ast={ast} editor={editor}/>
+            case "fvSolution": return <FvSolution ast={ast} editor={editor}/>
+            case "turbulenceProperties": return <Turbulence ast={ast} editor={editor}/>
+            default: return <Conditions fileData={fileData} ast={ast} editor={editor}/>
+        }
     }
+
     return (
         <div className={"centered"}>
-            {UIdictionary[fileName] || null}
+            {uiDictionary(fileName) || null}
         </div>
     )
 };

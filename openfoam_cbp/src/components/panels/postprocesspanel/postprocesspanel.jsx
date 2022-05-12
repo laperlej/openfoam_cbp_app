@@ -120,7 +120,6 @@ const PostProcessPanel = ({project, data}) => {
     }
 
     async function fetchState(url, statusRef, setStatus, callback) {
-      try {
         await axios.get(url, { 
           params: { 
             lastStatus: statusRef.current
@@ -129,10 +128,7 @@ const PostProcessPanel = ({project, data}) => {
           statusRef.current = response.data["status"];
           setStatus(response.data["status"]);
           if (isMounted.current) {setTimeout(()=>callback(), 1000)}
-        });
-      } catch (err) {
-        console.error(err);
-      }
+        }).catch((err)=>console.error(err));
     }
 
     const fetchRunStatus = () => {
