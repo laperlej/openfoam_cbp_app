@@ -1,1 +1,39 @@
-export const Turbulence = ({ast, editor}) => {return null}
+import React, { useState } from 'react';
+import { Dropdown } from 'semantic-ui-react'
+import Save from '../utils/save.jsx'
+
+const rasModels = [
+    "laminar",
+    "kEpsilon",
+    "kOmega",
+    "kOmegaSST",
+    "kOmegaSSTLM",
+    "kOmegaSSTSAS",
+    "LaunderSharmaKE",
+    "LRR",
+    "realizableKE",
+    "RNGkEpsilon",
+    "SpalartAllmaras",
+    "SSG",
+    "v2f"
+].map((x)=>{return {key: x, text: x, value: x}})
+
+export const Turbulence = ({ast, editor}) => {
+    const [rasModel, setRasModel] = useState(ast?.["RAS"]["RASModel"]?.[0]?.value || "kEpsilon")
+    console.log(ast?.["RAS"]["RASModel"]?.[0])
+    console.log(rasModel)
+    const vars = [
+        {foamObj: ast?.["RAS"]["RASModel"]?.[0], newValue: rasModel}
+    ]
+    
+    function validate() {
+        return true
+    }
+    return(<>
+        <p/><h3>RAS Model</h3><p/>
+        <Dropdown style={{"width": "150px"}} compact selection options={rasModels} onChange={(event,data)=>setRasModel(data.value)} defaultValue={rasModel}/>
+        <br/>
+        <Save vars={vars} isValid={validate()} editor={editor}/>
+    </>)
+
+}

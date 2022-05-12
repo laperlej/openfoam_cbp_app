@@ -7,7 +7,7 @@ import { DecomposeParDict } from "./uipanels/decomposepardict.jsx"
 import { HamTransportProperties } from "./uipanels/hamtransportproperties.jsx"
 import { FvSchemes } from "./uipanels/fvschemes.jsx"
 import { FvSolution } from "./uipanels/fvsolution.jsx"
-import { Turbulence } from "./uipanels/Turbulence.jsx"
+import { Turbulence } from "./uipanels/turbulence.jsx"
 import { Conditions } from "./uipanels/conditions.jsx"
 
 
@@ -52,6 +52,7 @@ const UIPanel = ({project, selectedItem, data, allASTs, editor}) => {
     }
 
     const uiDictionary = (filename) => {
+        console.log(filename)
         switch (filename) {
             case "controlDict": return <ControlDict ast={ast} editor={editor}/>
             case "decomposeParDict": return <DecomposeParDict ast={ast} editor={editor}/>
