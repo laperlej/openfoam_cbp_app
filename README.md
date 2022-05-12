@@ -8,7 +8,9 @@ This app is available as a docker image on docker hub [jlaperle/openfoam_cbp_app
 It uses [OpenFOAM v6](https://openfoam.org/version/6/) to run the simulations.
 
 ## Run with Docker (recommended for local use)
-Start by pulling the image
+[Install Docker](https://docs.docker.com/get-docker/)
+
+Pull the image
 
 ```
 sudo docker pull jlaperle/openfoam_cbp_app:latest
@@ -21,6 +23,8 @@ sudo docker run -p 3000:3000 --rm --init jlaperle/openfoam_cbp_app:latest
 ```
 
 ## Run with Singularity (recommended for HPC use)
+[Install Singularity](https://sylabs.io/guides/3.0/user-guide/installation.html)
+
 Run singularrity on the .sif file
 
 `singularity run openfoam_cbp_app.sif`
@@ -48,7 +52,7 @@ echo "https://$USER-python3000.proxy-east01.genap.ca/"
 singularity run $1
 ```
 
-Then run it on the .sif file
+Then pass the .sif file as a parameter
 
 `sh my_script.sh openfoam_cbp_app.sif`
 

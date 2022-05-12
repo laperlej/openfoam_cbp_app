@@ -9,7 +9,7 @@
 
 ##Solver
 
-This section is used to select which solver to use. Refer to each solver's section for more information.
+This section is used to select which solver to use. Refer to each solver's section for more information. Both urbanMicroclimateFoam and windDrivenFoam can use a custom .obj file, if none is provided the default tutorial mesh will be used.
 
 ###hamFoam
 https://gitlab.ethz.ch/openfoam-cbp/solvers/hamfoam
@@ -32,7 +32,10 @@ In this section you are presented with 3 panels.
 ###controlDict
 Used to control settings related to start/end time and the size of each step aswell as how often the solver should write down the results.
 
-####more to come ...
+###blockMeshDict
+Used to control the mesh, hamFoam provides a 1d mesh generator where the thickness of each layer is defined. The other solvers will provide a 3d mesh generator for the background. Make sure the mesh is large enough to encompass all of the coordiantes found in the .obj file.
+
+####This list is not exaustive, more to come...
 
 ##Run
 
