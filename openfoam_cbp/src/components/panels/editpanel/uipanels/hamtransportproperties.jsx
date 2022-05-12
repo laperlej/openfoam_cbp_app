@@ -8,7 +8,7 @@ const materialChoices = [
     "BuildingPaper",
     "GlassFiberInsulation",
     "GypsumBoard",
-    "Hamstad1Contrete",
+    "Hamstad1Concrete",
     "Hamstad1Insulation",
     "Hamstad3Wall",
     "Hamstad4Brick",
