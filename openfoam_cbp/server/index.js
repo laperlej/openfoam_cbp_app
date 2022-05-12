@@ -5,6 +5,7 @@ const os = require('os');
 const busboy = require('connect-busboy');
 
 var session = require('express-session')
+var morgan = require('morgan')
 var openFoam = require('./openfoam.js')
 var dataStore = require('./datastore.js').dataStore
 
@@ -17,6 +18,7 @@ const HTML_FILE = path.join(__dirname, '../dist/index.html');
 app.use(express.static(DIST_DIR));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json({ limit: '50mb' }));
+app.use(morgan('combined'))
 app.use(session({
   secret: require('crypto').randomBytes(48).toString('hex'),
   resave: false,
@@ -122,7 +124,6 @@ app.post("/api/uploadobj", (req, res) => {
   try{
     req.pipe(req.busboy); // Pipe it trough busboy
     req.busboy.on('file', (fieldname, file, filename) => {
-        console.log(`Upload of '${filename.filename}' started`);
 
         // Create a write stream of the new file
         const fstream = fs.createWriteStream(path.join("/tmp/", filename.filename));
@@ -131,7 +132,6 @@ app.post("/api/uploadobj", (req, res) => {
 
         // On finish of the upload
         fstream.on('close', () => {
-            console.log(`Upload of '${filename.filename}' finished`);
             res.send(filename.filename)
         });
     });

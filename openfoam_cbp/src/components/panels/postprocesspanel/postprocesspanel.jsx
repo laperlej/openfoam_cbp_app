@@ -154,7 +154,6 @@ const PostProcessPanel = ({project, data}) => {
     }, []);
 
     const runPostprocess = () => {
-      console.log("launching postprocess")
       function postPostprocess() {
         try {
           axios.post("/api/postprocess", {fields: fields, region: region, times: times, allPatches: allPatches});
