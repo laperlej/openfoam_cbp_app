@@ -3,18 +3,19 @@ import { Dropdown } from 'semantic-ui-react'
 import Save from '../utils/save.jsx'
 
 const rasModels = [
-    "laminar",
+    "LRR",
+    "LaunderSharmaKE",
+    "RNGkEpsilon",
+    "SSG",
+    "SpalartAllmaras",
+    "buoyantKEpsilon",
     "kEpsilon",
     "kOmega",
     "kOmegaSST",
     "kOmegaSSTLM",
     "kOmegaSSTSAS",
-    "LaunderSharmaKE",
-    "LRR",
+    "porousrealizableKE",
     "realizableKE",
-    "RNGkEpsilon",
-    "SpalartAllmaras",
-    "SSG",
     "v2f"
 ].map((x)=>{return {key: x, text: x, value: x}})
 
@@ -31,9 +32,9 @@ export const Turbulence = ({ast, editor}) => {
     }
     return(<>
         <p/><h3>RAS Model</h3><p/>
+        note: this may require changes to the fvschemes file.<br/>
         <Dropdown style={{"width": "150px"}} compact selection options={rasModels} onChange={(event,data)=>setRasModel(data.value)} defaultValue={rasModel}/>
         <br/>
         <Save vars={vars} isValid={validate()} editor={editor}/>
     </>)
-
 }
