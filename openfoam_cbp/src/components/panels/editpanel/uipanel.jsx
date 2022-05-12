@@ -2,11 +2,14 @@ import React from 'react';
 import './uipanel.css'
 import { useMonaco } from "@monaco-editor/react";
 import { ControlDict } from "./uipanels/controldict.jsx"
-import { BlockMeshDict1D, BlockMeshDictBackground } from "./uipanels/blockmeshdict.jsx"
+import { BlockMeshDict } from "./uipanels/blockmeshdict.jsx"
 import { DecomposeParDict } from "./uipanels/decomposepardict.jsx"
 import { HamTransportProperties } from "./uipanels/hamtransportproperties.jsx"
 import { FvSchemes } from "./uipanels/fvschemes.jsx"
 import { FvSolution } from "./uipanels/fvsolution.jsx"
+import { Turbulence } from "./uipanels/turbulence.jsx"
+import { Conditions } from "./uipanels/conditions.jsx"
+
 
 const UIPanel = ({project, selectedItem, data, allASTs, editor}) => {
     const fileData = data[selectedItem]
@@ -48,17 +51,23 @@ const UIPanel = ({project, selectedItem, data, allASTs, editor}) => {
         data[indexTransportProperties]["text"] = newTransportProperties.join("\n")
     }
 
-    const UIdictionary = {
-        "controlDict": <ControlDict ast={ast} editor={editor}/>,
-        "decomposeParDict": <DecomposeParDict ast={ast} editor={editor}/>,
-        "blockMeshDict": (project==="hamFoam")?<BlockMeshDict1D editMaterials={editMaterials} ast={ast} allASTs={allASTs} editor={editor}/>:<BlockMeshDictBackground editABL={editABLConditons} ast={ast} allASTs={allASTs} editor={editor}/>,
-        "transportProperties": (project==="hamFoam")?<HamTransportProperties ast={ast} editor={editor}/>:null,
-        "fvSchemes": <FvSchemes ast={ast} editor={editor}/>,
-        "fvSolution": <FvSolution ast={ast} editor={editor}/>,
+    const uiDictionary = (filename) => {
+        console.log(filename)
+        switch (filename) {
+            case "controlDict": return <ControlDict ast={ast} editor={editor}/>
+            case "decomposeParDict": return <DecomposeParDict ast={ast} editor={editor}/>
+            case "blockMeshDict": return <BlockMeshDict project={project} editMaterials={editMaterials} editABL={editABLConditons} ast={ast} allASTs={allASTs} editor={editor}/>
+            case "transportProperties": return (project==="hamFoam")?<HamTransportProperties ast={ast} editor={editor}/>:null
+            case "fvSchemes": return <FvSchemes ast={ast} editor={editor}/>
+            case "fvSolution": return <FvSolution ast={ast} editor={editor}/>
+            case "turbulenceProperties": return <Turbulence ast={ast} editor={editor}/>
+            default: return <Conditions fileData={fileData} ast={ast} editor={editor}/>
+        }
     }
+
     return (
         <div className={"centered"}>
-            {UIdictionary[fileName] || null}
+            {uiDictionary(fileName) || null}
         </div>
     )
 };

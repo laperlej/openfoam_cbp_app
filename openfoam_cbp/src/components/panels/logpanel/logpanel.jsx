@@ -15,15 +15,15 @@ const LogPanel = () => {
     }
 
     function fetchLogs() {
-      try {
-        axios.get("/api/fetchlogs").then((response)=>{
+      axios.get("/api/fetchlogs")
+        .then((response)=>{
           setState(response.data)
           if (isMounted.current) {setTimeout(fetchLogs, 1000)}
+        })
+        .catch((err)=>{
+          console.error(err);
+          if (isMounted.current) {setTimeout(fetchLogs, 1000)}
         });
-      } catch (err) {
-        console.error(err);
-        if (isMounted.current) {setTimeout(fetchLogs, 1000)}
-      }
     }
 
     useEffect(() => {

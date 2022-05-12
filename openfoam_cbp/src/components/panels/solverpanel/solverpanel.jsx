@@ -20,11 +20,8 @@ const SolverPanel = ({setProject, setTmpFolder}) => {
       setObjFile(null)
     }
     function newCase() {
-      try {
-        axios.get("/api/newCase", {params: {objFile: objFile}});
-      } catch (err) {
-        console.error(err);
-      }
+      axios.get("/api/newCase", {params: {objFile: objFile}})
+        .catch((err)=>console.error(err));
     }
 
     return (
@@ -38,7 +35,7 @@ const SolverPanel = ({setProject, setTmpFolder}) => {
             onChange={onChange}
           />
           <p />
-          {(selected && selected!=="hamFoam")?
+          {(selected && selected!="hamFoam")?
             <>
               <span>Upload an obj file (optional)</span><p/>
               <Upload accept=".obj" setObjName={setObjFile} setIsUploading={setIsUploading}/><p/>
