@@ -3,7 +3,7 @@ Web interface for the [OpenFOAM-CBP](https://gitlab.ethz.ch/openfoam-cbp) custom
 
 ## Requirements
 
-This app is available as a docker image on docker hub [jlaperle/openfoam_cbp_app](https://hub.docker.com/repository/docker/jlaperle/openfoam_gui) or singularity .sif file available on [Github](https://github.com/laperlej/openfoam_cbp_app)
+This app is available as a docker image on docker hub [jlaperle/openfoam_cbp_app](https://hub.docker.com/repository/docker/jlaperle/openfoam_gui) or singularity .sif file available on [Github](https://github.com/laperlej/openfoam_cbp_app/releases)
 
 It uses [OpenFOAM v6](https://openfoam.org/version/6/) to run the simulations.
 
