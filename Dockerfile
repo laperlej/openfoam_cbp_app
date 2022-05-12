@@ -2,6 +2,7 @@ FROM node:latest AS builder
 SHELL ["/bin/bash", "-c"]
 COPY . /app/
 WORKDIR /app/openfoam_cbp
+RUN npm update -g npm
 RUN npm install nodemon pkg --global
 RUN yarn install
 #patching semantic-ui bug
