@@ -69,11 +69,11 @@ const BlockMeshDictBackground = ({ast, editABL, editor}) => {
 
 const BlockMeshDict1D = ({ast, editMaterials, allASTs, editor}) => {
     //TODO: make sure to update correctly on nbLayers update
-    const [nbLayers, setNbLayers] = useState(3)
+    const [nbLayers, setNbLayers] = useState(3)//has to be based on transportproperties, data has to be saved somewhere
     const [segmentLens, setSegmentLens] = useState(["0.365", "0.015", "0.04","1","1","1","1","1","1","1"])
     const [segmentCells, setSegmentCells]  = useState(["100","15","30","1","1","1","1","1","1","1"])
     const [segmentRatios, setSegmentRatios] = useState(["50", "20", "20","1","1","1","1","1","1","1"])
-    const meshData = generateMesh(segmentLens.slice(nbLayers), segmentCells.slice(nbLayers), segmentRatios.slice(nbLayers).map((ratio)=>`((0.5 0.5 ${ratio})(0.5 0.5 ${1/parseFloat(ratio)}))`))
+    const meshData = generateMesh(segmentLens.slice(0, nbLayers), segmentCells.slice(0, nbLayers), segmentRatios.slice(0, nbLayers).map((ratio)=>`((0.5 0.5 ${ratio})(0.5 0.5 ${1/parseFloat(ratio)}))`))
     const vars = [
         {foamObj: ast?.["vertices"], newValue: meshData.vertices},
         {foamObj: ast?.["blocks"], newValue: meshData.blocks},
