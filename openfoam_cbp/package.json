@@ -17,7 +17,7 @@
     "scripts": "dist/*.js",
     "assets": "dist/*",
     "targets": [
-      "node17-linux-x64"
+      "latest-linux-x64"
     ]
   },
   "devDependencies": {
