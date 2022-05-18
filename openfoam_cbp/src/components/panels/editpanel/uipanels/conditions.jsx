@@ -55,7 +55,7 @@ const Uniform1d = ({ast, editor}) => {
     }
     return (
         <>
-            <p/>Internal Field<br/>
+            <p/>Adjust internal and boundary field values.<br/>
             <Input className={isValidFloat(fieldValue)?null:"error"} placeholder={"0"} onChange={(event,data)=>setFieldValue(data.value)} defaultValue={fieldValue} /><p/>
             <br/>
             <Save vars={vars} isValid={validate()} editor={editor}/>
@@ -80,12 +80,20 @@ const Uniform3d = ({ast, editor}) => {
     }
     return (
         <>
-            <p/>Internal Field<br/>
+            <p/>Adjust internal and boundary field values.<br/>
             <Input className={isValidFloat(fieldValue)?null:"error"} placeholder={"0"} onChange={(event,data)=>setFieldValue(data.value)} defaultValue={fieldValue} /><p/>
             <br/>
             <Save vars={vars} isValid={validate()} editor={editor}/>
         </>
     );
+}
+
+const Help = () => {
+    return (<>
+        <br/><h4>Edit Section</h4><br/>
+        Select files on the right hand panel to adjust the case's settings.<br/>
+        Files in the <b>system</b> folder are a good place to start.
+    </>);
 }
 
 export const Conditions = ({fileData, ast, editor}) => {
@@ -104,6 +112,6 @@ export const Conditions = ({fileData, ast, editor}) => {
         case "k":
         case "alphat":
         case "epsilon": return <Uniform1d key={fileData["data"]} ast={ast} editor={editor}/>
-        default: return null
+        default: return <Help/>
     }
 }

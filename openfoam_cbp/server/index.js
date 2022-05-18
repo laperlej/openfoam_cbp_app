@@ -108,6 +108,7 @@ app.get("/api/cpucount", (req, res) => {
 app.get("/api/newcase", (req, res) => {
   //
   const session = dataStore.getSession(req.session.id)
+  openFoam.kill_all(session)
   session.caseDir = null
   session.caseName = null
   if (req.query.objFile) {
@@ -115,7 +116,7 @@ app.get("/api/newcase", (req, res) => {
   } else {
     session.objFile=null
   }
-  res.send(openFoam.kill_all(session));
+  res.send("OK");
 })
 
 app.post("/api/uploadobj", (req, res) => {

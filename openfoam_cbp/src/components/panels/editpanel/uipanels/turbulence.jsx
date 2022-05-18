@@ -33,7 +33,7 @@ export const Turbulence = ({ast, editor}) => {
     return(<>
         <p/><h3>RAS Model</h3><p/>
         note: this may require changes to the fvschemes file.<br/>
-        <Dropdown style={{"width": "150px"}} compact selection options={rasModels} onChange={(event,data)=>setRasModel(data.value)} defaultValue={rasModel}/>
+        <Dropdown style={{"width": "150px"}} compact selection options={rasModels} onChange={(event,data)=>setRasModel(data.value)} defaultValue={rasModel}/><p/>
         <br/>
         <Save vars={vars} isValid={validate()} editor={editor}/>
     </>)

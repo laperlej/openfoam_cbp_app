@@ -54,6 +54,12 @@ const UIPanel = ({project, selectedItem, data, allASTs, editor}) => {
     const uiDictionary = (filename) => {
         console.log(filename)
         switch (filename) {
+            case "Allclean":
+            case "Allrun":
+            case "Allprepare":
+            case "reconstructScript":
+            case "setset.batch":
+            case "buildings.obj": return <><br/>This file will be adjusted automatically.<br/>It cannot be edited manually.</>
             case "controlDict": return <ControlDict ast={ast} editor={editor}/>
             case "decomposeParDict": return <DecomposeParDict ast={ast} editor={editor}/>
             case "blockMeshDict": return <BlockMeshDict project={project} editMaterials={editMaterials} editABL={editABLConditons} ast={ast} allASTs={allASTs} editor={editor}/>

@@ -32,7 +32,7 @@ const BlockMeshDictBackground = ({ast, editABL, editor}) => {
     }
     return (<>
         <p/><h3>Background mesh generation</h3><p/>
-        Important: Make sure the background mesh covers all the coordinates found in the .obj file, Use negative coordinates if you have to. <p/>
+        Important: Make sure the background mesh covers all the coordinates found in the obj file. Use negative coordinates if you have to. <p/>
         <Table compact>
             <Table.Header>
                 <Table.Row>

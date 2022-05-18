@@ -15,7 +15,9 @@ const logs = {"hamFoam":["log.blockMesh", "log.setSet", "log.decomposePar", "log
 
 function kill_spawn(childProcess, statusListener) {
   if (childProcess) {
+    process.kill(-childProcess.pid)
     childProcess.kill('SIGINT');
+    childProcess.kill('SIGTERM');
     childProcess = null;
     statusListener.updateStatus("not started")
   }
@@ -54,7 +56,7 @@ async function writeCase (caseFiles, caseName, multiProcessing, latestTime, objF
               toDo.push(child)
           } else {
               if (objFile && caseFiles[child]["data"]==="buildings.obj") {
-                await fs.promises.rename(path.join("/tmp/", objFile), path.join(caseDir, child))
+                await fs.promises.rename(path.join("/tmp/", objFile), path.join(caseDir, child)).catch((err)=>(console.error(err)))
               } else {
                 await fs.promises.writeFile(path.join(caseDir, child), caseFiles[child]["text"])
               }
@@ -75,7 +77,8 @@ async function runCase (tmpFolder, runStatusListener) {
     stdio: 'pipe',
     encoding: 'utf-8',
     shell: '/bin/bash',
-    cwd: await tmpFolder
+    cwd: await tmpFolder,
+    detached: true
   })
   child.stderr.on('data', (data) => {
     console.error(`stderr: ${data}`);
@@ -117,7 +120,8 @@ async function runVTK(session, fields, region, times, allPatches) {
     stdio: 'pipe',
     encoding: 'utf-8',
     shell: '/bin/bash',
-    cwd: workdir
+    cwd: workdir,
+    detached: true
   })
   child.stderr.on('data', (data) => {
     console.error(`stderr: ${data}`);
