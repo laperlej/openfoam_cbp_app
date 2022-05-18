@@ -28,6 +28,7 @@ app.use(busboy({
   highWaterMark: 2 * 1024 * 1024, // Set 2MiB buffer
 }));
 
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 app.post("/api/sendcase", (req, res) => {
   //caseFiles, caseName, multiProcessing

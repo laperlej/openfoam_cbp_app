@@ -33,6 +33,7 @@ function prepAllrun(files, caseName, multiProcessing, latestTime, objFile) {
     let f = files[index]
     if (f["data"] == "Allrun") {
       f["text"] = makeRunScript(caseName,f["index"],multiProcessing, objFile)
+      console.log(f["text"])
       if (latestTime) {
         f["text"] = f["text"].replace("reconstructPar", "reconstructPar -latestTime")
       }
