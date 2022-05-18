@@ -15,7 +15,7 @@ const logs = {"hamFoam":["log.blockMesh", "log.setSet", "log.decomposePar", "log
 
 function kill_spawn(childProcess, statusListener) {
   if (childProcess) {
-    process.kill(-childProcess.pid)
+    try {process.kill(-childProcess.pid)} catch {}
     childProcess.kill('SIGINT');
     childProcess.kill('SIGTERM');
     childProcess = null;

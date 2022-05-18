@@ -18,7 +18,7 @@ const HTML_FILE = path.join(__dirname, '../dist/index.html');
 app.use(express.static(DIST_DIR));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json({ limit: '50mb' }));
-app.use(morgan('combined'))
+app.use(morgan('common'))
 app.use(session({
   secret: require('crypto').randomBytes(48).toString('hex'),
   resave: false,
