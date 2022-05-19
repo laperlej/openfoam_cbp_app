@@ -95,9 +95,9 @@ const PostProcessPanel = ({project, data}) => {
       const parser = new Parser();
       const ast = parser.parse(data["constant/regionProperties"]["text"]);
       let meshRegions = []
-      for (const token of ast["regions"]) {
-        if (Array.isArray(token)) {
-          for (const region of token) {
+      for (const token of ast["regions"].value) {
+        if (token.type==="array") {
+          for (const region of token.value) {
             meshRegions.push(region.value)
           }
         }
@@ -167,18 +167,18 @@ const PostProcessPanel = ({project, data}) => {
           <RunStatusMessage runStatus={runStatus} postStatus={postStatus}/>
           <h1 className={"shortmargin"}>Postprocessing Options</h1><p/>
 
-          Select one or many fields to include<br/>
+          Select one or many fields to include (optional)<br/>
           <span style={{color:'#CCCCCC'}}>Leave empty to include all fields</span><br/>
           <Dropdown onChange={(event, data)=>setFields(data.value)} placeholder='Fields' multiple selection options={fieldOptions[project]} /><p/>
 
           {data["constant/regionProperties"] && 
             <>
-              Specify alternative mesh region. (optional)<br/>
+              Specify alternative mesh region (optional)<br/>
               <Dropdown onChange={(event, data)=>setRegion(data.value)} placeholder='Regions' selection options={regionOptions} /><p/>
             </>
           }
 
-          Select which times to include<br/>
+          Select which times to include (optional)<br/>
           <span style={{color:'#CCCCCC'}}>Leave empty to include all times</span><br/>
           <span style={{color:'#CCCCCC'}}>comma-separated time ranges - eg, '0:10,20,40:70,1000:'</span><br/>
           <Input className={isValidTime?null:"error"} onChange={(event,data)=>setTimes(data.value)} placeholder="Times" /><br/><p/>

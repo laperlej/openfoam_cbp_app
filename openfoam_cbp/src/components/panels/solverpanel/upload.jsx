@@ -2,14 +2,13 @@ import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react';
 import { Button, Progress } from 'semantic-ui-react'
 
-const Upload = ({accept, setObjName, setIsUploading}) => {
+const Upload = ({accept, onUploadFinish, setIsUploading}) => {
     const fileInputRef = useRef("")
     const [file, setFile] = useState({name: ""})
     const [progress, setProgress] = useState(null)
     function onFileChange(event) {
       setFile(event.target.files[0])
     }
-    useEffect(()=>{if (progress==100){setIsUploading(false)}}, [progress])
     function upload() {
       setIsUploading(true)
       let formData = new FormData();
@@ -19,7 +18,7 @@ const Upload = ({accept, setObjName, setIsUploading}) => {
           onUploadProgress: data => {
             setProgress(Math.round((100 * data.loaded) / data.total))
           }
-      }).then((response)=>setObjName(response.data))
+      }).then((response)=>onUploadFinish(response.data))
     }
     return (
         (progress)?<Progress

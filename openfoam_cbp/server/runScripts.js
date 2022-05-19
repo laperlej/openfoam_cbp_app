@@ -9,10 +9,14 @@ function makeRunScript(caseName, fileIndex, isMulti, objFile) {
 
     script.push(". $WM_PROJECT_DIR/bin/tools/RunFunctions")
     
-    if (caseName === "urbanMicroclimateFoam" && objFile) {
-        script.push("ln -s air/polyMesh constant/polyMesh")
-        script.push("ln -s air/fvSchemes system/fvSchemes")
-        script.push("ln -s air/fvSolution system/fvSolution")
+    if (caseName === "urbanMicroclimateFoam") {
+        if (objFile || isMulti) {
+            script.push("ln -s air/polyMesh constant/polyMesh")
+        }
+        if (objFile) {
+            script.push("ln -s air/fvSchemes system/fvSchemes")
+            script.push("ln -s air/fvSolution system/fvSolution")
+        }
     }
 
     if (objFile && ((caseName === "windDrivenRainFoam" && fileIndex === "simpleFoam/Allrun") || caseName === "urbanMicroclimateFoam")) {
@@ -51,17 +55,40 @@ function makeRunScript(caseName, fileIndex, isMulti, objFile) {
     }
 
     if (isMulti) {
-        script.push("runApplication decomposePar")
-        script.push("runParallel \`getApplication\`")
-        script.push("runApplication reconstructPar")
+        if (caseName === "urbanMicroclimateFoam") {
+            script.push("runApplication decomposePar -region air")
+            script.push("runParallel \`getApplication\`")
+            script.push("runApplication reconstructPar -region air")
+        } else {
+            script.push("runApplication decomposePar")
+            script.push("runParallel \`getApplication\`")
+            script.push("runApplication reconstructPar")
+        }
     } else {
         script.push("runApplication \`getApplication\`")
     }
     return script.join("\n")
 }
-
-
-
+/*
+`#!/bin/sh
+cd \${0%/*} || exit 1    # run from this directory
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+runApplication blockMesh -region air
+runApplication createPatch -region air -overwrite
+runApplication decomposePar
+runParallel \`getApplication\`
+runApplication reconstructPar`
+*/
+/*
+#!/bin/sh
+cd ${0%/*} || exit 1
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+runApplication blockMesh -region air
+runApplication createPatch -region air -overwrite
+runApplication decomposePar
+runParallel `getApplication`
+runApplication reconstructPar
+*/
 const runScripts = {
 "hamFoam": {"Allrun": {
     "single":
