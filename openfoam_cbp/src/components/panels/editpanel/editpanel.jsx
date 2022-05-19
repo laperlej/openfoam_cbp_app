@@ -71,7 +71,7 @@ const EditPanel = ({project, data}) => {
   
   return (
     <ReflexContainer orientation="vertical" style={{height:windowHeight()-48}}>
-        <ReflexElement size="250" className="left-pane">
+        <ReflexElement size={250} className="left-pane">
             <div className={"pane-content gray-bg"}>
               <ProjectFileTree data={data} setSelectedItem={handleSelectedChange} />
             </div>

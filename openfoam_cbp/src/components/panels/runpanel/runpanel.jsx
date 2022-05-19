@@ -7,7 +7,7 @@ import './runpanel.css';
 
 const RunPanel = ({project, data, tmpFolder, setFolder}) => {
     const [multiProcessing, setMultiProcessing]=useState(false)
-    const [latestTime, setLatestTime]=useState(false)
+    const [latestTime, setLatestTime]=useState(true)
     let navigate = useNavigate();
     const runSolver = () => {
       function postCase() {
@@ -32,7 +32,7 @@ const RunPanel = ({project, data, tmpFolder, setFolder}) => {
           {multiProcessing?
             <div>
               Reconstruct only the lastest time ?<br/>
-              <Checkbox toggle onChange={onLatestTimeToggle}/><p/>
+              <Checkbox toggle defaultChecked onChange={onLatestTimeToggle}/><p/>
               Important: Be sure to adjust the decomposeParDict file(s) in the system folder(s).<br/><br/>
             </div>:null}
           <button className={[tmpFolder?'disabled':'primary',"ui","button"].join(' ')} onClick={runSolver} >

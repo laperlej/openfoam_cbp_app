@@ -23,6 +23,10 @@ const SolverPanel = ({setProject, setTmpFolder}) => {
       axios.get("/api/newCase", {params: {objFile: objFile}})
         .catch((err)=>console.error(err));
     }
+    function onUploadFinish(obj) {
+      setObjFile(obj)
+      setIsUploading(false)
+    }
 
     return (
         <div className={"centered"}>
@@ -38,7 +42,7 @@ const SolverPanel = ({setProject, setTmpFolder}) => {
           {(selected && selected!="hamFoam")?
             <>
               <span>Upload an obj file (optional)</span><p/>
-              <Upload accept=".obj" setObjName={setObjFile} setIsUploading={setIsUploading}/><p/>
+              <Upload accept=".obj" onUploadFinish={onUploadFinish} setIsUploading={setIsUploading}/><p/>
             </>:null}
           <Button 
             content="Next"

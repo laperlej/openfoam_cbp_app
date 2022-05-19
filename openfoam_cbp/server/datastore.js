@@ -23,6 +23,20 @@ class DataStore {
         }
         return this.init_session(id)
     }
+    
+    release() {
+        for (let sessionKey in this.dataStore) {
+            let processes =  this.dataStore[sessionKey].childProcesses
+            for (let processKey in processes) {
+                let childProcess = processes[processKey]
+                try {
+                    process.kill(-childProcess.pid)
+                    childProcess.kill('SIGINT')
+                    childProcess.kill('SIGTERM')
+                } catch {}
+            }
+        }
+    }
 }
 
 let dataStore = new DataStore()

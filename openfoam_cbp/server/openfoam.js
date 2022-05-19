@@ -15,7 +15,7 @@ const logs = {"hamFoam":["log.blockMesh", "log.setSet", "log.decomposePar", "log
 
 function kill_spawn(childProcess, statusListener) {
   if (childProcess) {
-    process.kill(-childProcess.pid)
+    try {process.kill(-childProcess.pid)} catch {}
     childProcess.kill('SIGINT');
     childProcess.kill('SIGTERM');
     childProcess = null;
@@ -56,7 +56,7 @@ async function writeCase (caseFiles, caseName, multiProcessing, latestTime, objF
               toDo.push(child)
           } else {
               if (objFile && caseFiles[child]["data"]==="buildings.obj") {
-                await fs.promises.rename(path.join("/tmp/", objFile), path.join(caseDir, child)).catch((err)=>(console.error(err)))
+                await fs.promises.copyFile(path.join("/tmp/", objFile), path.join(caseDir, child)).catch((err)=>(console.error(err)))
               } else {
                 await fs.promises.writeFile(path.join(caseDir, child), caseFiles[child]["text"])
               }

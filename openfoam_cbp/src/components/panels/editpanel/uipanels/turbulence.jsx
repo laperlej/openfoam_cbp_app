@@ -21,8 +21,6 @@ const rasModels = [
 
 export const Turbulence = ({ast, editor}) => {
     const [rasModel, setRasModel] = useState(ast?.["RAS"]["RASModel"]?.[0]?.value || "kEpsilon")
-    console.log(ast?.["RAS"]["RASModel"]?.[0])
-    console.log(rasModel)
     const vars = [
         {foamObj: ast?.["RAS"]["RASModel"]?.[0], newValue: rasModel}
     ]

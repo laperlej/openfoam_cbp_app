@@ -96,6 +96,8 @@ const AppRoutes = () => {
   }
 
   const setCase = (newProject, objFile) => {
+    console.log(newProject)
+    console.log(objFile)
     let newData = {};
     if (objFile) {
       newData = JSON.parse(JSON.stringify(all_data[newProject+"_obj"]))
