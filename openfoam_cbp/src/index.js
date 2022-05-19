@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import AppRoutes from './components/approutes/approutes.jsx';
 import { BrowserRouter as Router } from 'react-router-dom';
 import 'react-complex-tree/lib/style.css';
@@ -9,8 +9,10 @@ if (module.hot) {
     module.hot.accept();
 }
 
-ReactDOM.render(
-<Router>
-    <AppRoutes />
-</Router>,
-document.getElementById('app'));
+const container = document.getElementById('app');
+const root = createRoot(container)
+root.render(
+    <Router>
+        <AppRoutes />
+    </Router>,
+);
