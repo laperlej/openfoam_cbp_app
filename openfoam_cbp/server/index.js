@@ -28,6 +28,10 @@ app.use(busboy({
   highWaterMark: 2 * 1024 * 1024, // Set 2MiB buffer
 }));
 
+process.on("uncaughtException", () => {dataStore.release(); process.exit()});
+process.on("SIGINT", () => {dataStore.release(); process.exit()});
+process.on("SIGTERM", () => {dataStore.release(); process.exit()});
+
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 app.post("/api/sendcase", (req, res) => {

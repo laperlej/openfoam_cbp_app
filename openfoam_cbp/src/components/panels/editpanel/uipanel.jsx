@@ -52,7 +52,6 @@ const UIPanel = ({project, selectedItem, data, allASTs, editor}) => {
     }
 
     const uiDictionary = (filename) => {
-        console.log(filename)
         switch (filename) {
             case "Allclean":
             case "Allrun":
