@@ -3,6 +3,8 @@
 
 Web interface for the [OpenFOAM-CBP](https://gitlab.ethz.ch/openfoam-cbp) custom solvers
 
+Supported browsers: [Chrome](https://www.google.com/chrome/)
+
 ## Requirements
 
 This app is available as a docker image on docker hub [jlaperle/openfoam_cbp_app](https://hub.docker.com/repository/docker/jlaperle/openfoam_gui) or singularity .sif file available on [Github](https://github.com/laperlej/openfoam_cbp_app/releases)
