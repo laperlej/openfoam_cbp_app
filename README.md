@@ -3,7 +3,7 @@
 
 Web interface for the [OpenFOAM-CBP](https://gitlab.ethz.ch/openfoam-cbp) custom solvers
 
-Supported browsers: [Chrome](https://www.google.com/chrome/)
+Supported browsers: [Chrome](https://www.google.com/chrome/), [Safari](https://www.apple.com/safari/)
 
 ## Requirements
 
