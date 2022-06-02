@@ -1,22 +1,47 @@
-FROM node:latest AS builder
-SHELL ["/bin/bash", "-c"]
-COPY . /app/
+FROM node:17 AS deps
+COPY ./openfoam_cbp/package.json /app/openfoam_cbp/package.json
 WORKDIR /app/openfoam_cbp
-RUN npm update -g npm
-RUN npm install nodemon pkg --global
-RUN yarn install
-#patching semantic-ui bug
-RUN sed -i s/\;\;/\;/g node_modules/semantic-ui-css/semantic.min.css
-RUN npm run pkg
+RUN npm install
 
-FROM openfoam/openfoam6-paraview54
+FROM node:17 AS builder
+COPY ./openfoam_cbp /app/openfoam_cbp
+COPY --from=deps /app/openfoam_cbp/node_modules /app/openfoam_cbp/node_modules
+WORKDIR /app/openfoam_cbp
+ENV STANDALONE='true'
+RUN npm run build
+
+FROM openfoam/openfoam6-graphical-apps AS runner
+SHELL ["/bin/bash", "-c"]
 USER root
-COPY utils /app/utils
-COPY --from=builder /app/openfoam_cbp/openfoam_cbp /bin/openfoam_cbp
+
 WORKDIR /app
+RUN addgroup --system --gid 1001 nodejs &&\
+    adduser --system --uid 1001 nextjs &&\
+    chown nextjs:nodejs /app
+
+RUN curl -sL https://deb.nodesource.com/setup_17.x | bash - &&\
+    apt-get install -y gcc g++ make nodejs &&\
+    npm update --location=global npm
 RUN apt-get update && apt-get install -y git && apt-get clean &&\
-git config --global http.sslverify false &&\
-sed -i 's@^\[ "\$BASH" -o "\$ZSH_NAME" \] \&\& \\@#\[ "\$BASH" -o "\$ZSH_NAME" \] \&\& \\@g' /opt/openfoam6/etc/bashrc &&\
-sed -i 's@\$HOME@/home/openfoam@g' /opt/openfoam6/etc/bashrc
-RUN sh utils/compile_solvers.sh
-ENTRYPOINT ["/bin/openfoam_cbp"]
+    sed -i 's@^\[ "\$BASH" -o "\$ZSH_NAME" \] \&\& \\@#\[ "\$BASH" -o "\$ZSH_NAME" \] \&\& \\@g' /opt/openfoam6/etc/bashrc &&\
+    sed -i 's@\$HOME@/home/nextjs@g' /opt/openfoam6/etc/bashrc
+
+USER nextjs
+ENV HOME=/home/nextjs
+COPY utils /app/utils
+RUN git config --global http.sslverify false &&\
+    sh utils/compile_solvers.sh
+
+COPY --from=builder --chown=nextjs:nodejs /app/openfoam_cbp/public /app/public
+COPY --from=builder --chown=nextjs:nodejs /app/openfoam_cbp/package.json /app/package.json
+COPY --from=builder --chown=nextjs:nodejs /app/openfoam_cbp/.next/standalone /app/
+COPY --from=builder --chown=nextjs:nodejs /app/openfoam_cbp/.next/static /app/.next/static
+
+WORKDIR /app
+USER nextjs
+
+EXPOSE 3000
+
+ENV PORT 3000
+
+ENTRYPOINT ["node", "server.js"]

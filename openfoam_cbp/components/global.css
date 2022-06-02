@@ -1,0 +1,16 @@
+.rct-tree-root-focus {
+    outline-style: none !important;
+}
+
+.highlightMonaco {
+    color: #000000 !important;
+    background-color:#ffeb69c2;
+}
+
+.centered {
+    text-align: center;
+}
+
+.MuiDataGrid-footerContainer{
+    display: none !important
+}
