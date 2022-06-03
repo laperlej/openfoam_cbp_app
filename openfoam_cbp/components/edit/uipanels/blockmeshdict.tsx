@@ -201,7 +201,7 @@ const BlockMeshDict1D = ({ ast, editMaterials }) => {
 
 export const BlockMeshDict = ({ editMaterials, editABL, ast }) => {
   const { state } = useContext(CaseContext)
-  if (state.projectName === 'hamFoam') {
+  if (state.solverName === 'hamFoam') {
     return <BlockMeshDict1D editMaterials={editMaterials} ast={ast} />
   } else {
     if (state.objFileName) {
