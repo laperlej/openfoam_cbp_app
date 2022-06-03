@@ -1,9 +1,5 @@
 import { createContext } from 'react'
-import { emptyState } from './emptyState'
 
-const CaseContext = createContext({
-  state: emptyState,
-  dispatch: (action) => {}
-})
+const CaseContext = createContext({ state: null, dispatch: null })
 
 export default CaseContext

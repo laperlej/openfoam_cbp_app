@@ -16,9 +16,12 @@ import CaseContext from '../casecontext'
 import 'react-reflex/styles.css'
 import 'react-complex-tree/lib/style.css'
 import EditorContext from '../editorcontext'
+import { emptyState } from '../emptyState'
 
 export const EditPanel = () => {
   const { state } = useContext(CaseContext)
+  const solverName = state?.caseFiles || emptyState.solverName
+  const caseFiles = state?.caseFiles || emptyState.caseFiles
   const monaco = useMonaco()
   const [editor, setEditor] = useState(null)
   const parser = new Parser()
@@ -27,11 +30,11 @@ export const EditPanel = () => {
   const saveFilesTimeout = useRef(null)
 
   function safeParse(key) {
-    return fileIsBash(key) ? {} : parser.parse(state.caseFiles[key]['text'])
+    return fileIsBash(key) ? {} : parser.parse(caseFiles[key]['text'])
   }
   function initASTs() {
     let astObj = {}
-    for (const key in state.caseFiles) {
+    for (const key in caseFiles) {
       astObj[key] = safeParse(key)
     }
     return astObj
@@ -45,12 +48,12 @@ export const EditPanel = () => {
 
   const saveCaseFiles = useCallback(() => {
     try {
-      localStorage.setItem('caseFiles', JSON.stringify(state.caseFiles))
+      localStorage.setItem('caseFiles', JSON.stringify(caseFiles))
     } finally {
       clearTimeout(saveFilesTimeout.current)
       saveFilesTimeout.current = null
     }
-  }, [state.caseFiles])
+  }, [caseFiles])
 
   useEffect(() => {
     return saveCaseFiles
@@ -60,7 +63,7 @@ export const EditPanel = () => {
     if (!saveFilesTimeout.current) {
       saveFilesTimeout.current = setTimeout(saveCaseFiles, 300)
     }
-    state.caseFiles[selectedItem.current]['text'] = editorValue
+    caseFiles[selectedItem.current]['text'] = editorValue
     updateASTs(selectedItem.current)
   }
 
@@ -93,7 +96,7 @@ export const EditPanel = () => {
       'reconstructScript',
       'setset.batch',
       'buildings.obj'
-    ].includes(state.caseFiles[key]['data'])
+    ].includes(caseFiles[key]['data'])
   }
   const windowHeight: () => number = useWindowHeight
   return (
@@ -104,7 +107,7 @@ export const EditPanel = () => {
       <ReflexElement size={250} className="left-pane">
         <div className={`pane-content ${styles.graybg}`}>
           <ProjectFileTree
-            data={state.caseFiles}
+            data={caseFiles}
             setSelectedItem={handleSelectedChange}
           />
         </div>
@@ -114,9 +117,9 @@ export const EditPanel = () => {
         <div className={'pane-content'}>
           <EditorContext.Provider value={editor}>
             <UIPanel
-              project={state.solverName}
+              project={solverName}
               selectedItem={selectedItem.current}
-              data={state.caseFiles}
+              data={caseFiles}
               allASTs={allASTs}
             />
           </EditorContext.Provider>
@@ -129,11 +132,11 @@ export const EditPanel = () => {
             options={{
               readOnly:
                 fileIsBash(selectedItem.current) ||
-                state.caseFiles[selectedItem.current]['hasChildren'],
+                caseFiles[selectedItem.current]['hasChildren'],
               minimap: { enabled: false }
             }}
-            path={state.caseFiles[selectedItem.current]['index']}
-            defaultValue={state.caseFiles[selectedItem.current]['text']}
+            path={caseFiles[selectedItem.current]['index']}
+            defaultValue={caseFiles[selectedItem.current]['text']}
             defaultLanguage={
               fileIsBash(selectedItem.current) ? 'shell' : 'csharp'
             }
