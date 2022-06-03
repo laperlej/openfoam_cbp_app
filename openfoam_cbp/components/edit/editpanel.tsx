@@ -96,7 +96,6 @@ export const EditPanel = () => {
     ].includes(state.caseFiles[key]['data'])
   }
   const windowHeight: () => number = useWindowHeight
-
   return (
     <ReflexContainer
       orientation="vertical"

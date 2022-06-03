@@ -8,9 +8,11 @@ const withMDX = require('@next/mdx')({
 
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
-  experimental: {
-    outputStandalone: process.env.STANDALONE === 'true'
-  },
+  ...(process.env.STANDALONE && {
+    experimental: {
+      outputStandalone: 'true'
+    }
+  }),
   async redirects() {
     return [
       {
