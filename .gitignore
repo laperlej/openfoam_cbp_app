@@ -17,3 +17,7 @@ urbanFoam/
 buildings.obj
 buildings.obj.gz
 *.sif
+.next/
+cypress/downloads
+cypress/screenshots
+cypress/videos
