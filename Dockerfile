@@ -7,7 +7,6 @@ FROM node:17 AS builder
 COPY ./openfoam_cbp /app/openfoam_cbp
 COPY --from=deps /app/openfoam_cbp/node_modules /app/openfoam_cbp/node_modules
 WORKDIR /app/openfoam_cbp
-ENV STANDALONE='true'
 RUN npm run build
 
 # FROM openfoam/openfoam6-graphical-apps AS runner
@@ -65,7 +64,8 @@ RUN git config --global http.sslverify false &&\
 
 COPY --from=builder /app/openfoam_cbp/public /app/public
 COPY --from=builder /app/openfoam_cbp/package.json /app/package.json
-COPY --from=builder /app/openfoam_cbp/.next/standalone /app/
-COPY --from=builder  /app/openfoam_cbp/.next/static /app/.next/static
+COPY --from=builder /app/openfoam_cbp/.next /app/.next
+RUN npm install
 
-ENTRYPOINT ["/usr/bin/node", "/app/server.js"]
+ENTRYPOINT ["npm", "run", "start"]
+#ENTRYPOINT ["npm", "--prefix", "/app", "run", "start"]
