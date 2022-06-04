@@ -3,9 +3,7 @@ services:
   openfoam_cbp:
     build:
       context: ../
-    ports:
-      - '3000:3000'
-
+      
   cypress_firefox:
     image: "cypress/included:10.0.0"
     depends_on:

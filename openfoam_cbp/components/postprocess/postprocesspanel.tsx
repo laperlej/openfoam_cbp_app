@@ -14,6 +14,7 @@ import CaseContext from '../casecontext'
 import { CustomMultiSelect } from '../custom/customMultiSelect'
 import EventSource from 'eventsource'
 import Box from '@mui/material/Box'
+import { emptyState } from '../emptyState'
 
 const getFieldOptions = (solverName) => {
   switch (solverName) {
@@ -141,6 +142,8 @@ const PostStatusMessage = ({ postStatus }) => {
 
 export const PostProcessPanel = () => {
   const { state } = useContext(CaseContext)
+  const solverName = state?.caseFiles || emptyState.solverName
+  const caseFiles = state?.caseFiles || emptyState.caseFiles
   const [runStatus, setRunStatus] = useState('unkown')
   const [postStatus, setPostStatus] = useState('unkown')
   const [fields, setFields] = useState([])
@@ -243,11 +246,11 @@ export const PostProcessPanel = () => {
       <CustomMultiSelect
         value={fields}
         label="Fields"
-        options={getFieldOptions(state.solverName)}
+        options={getFieldOptions(solverName)}
         onChange={(event) => setFields(event.target.value)}
       />
       <p />
-      {state.caseFiles['constant/regionProperties'] && (
+      {caseFiles['constant/regionProperties'] && (
         <>
           Specify alternative mesh region (optional)
           <p />
@@ -255,7 +258,7 @@ export const PostProcessPanel = () => {
             style={{ width: '200px' }}
             onChange={(event) => setRegion(event.target.value)}
             label={'Region'}
-            options={getRegionOptions(state.caseFiles)}
+            options={getRegionOptions(caseFiles)}
           />
           <p />
         </>
