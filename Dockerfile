@@ -62,10 +62,7 @@ COPY utils /app/utils
 RUN git config --global http.sslverify false &&\
     sh utils/compile_solvers.sh
 
-COPY --from=builder /app/openfoam_cbp/public /app/public
-COPY --from=builder /app/openfoam_cbp/package.json /app/package.json
-COPY --from=builder /app/openfoam_cbp/.next /app/.next
+COPY --from=builder /app/openfoam_cbp /app/openfoam_cbp
 RUN npm install
 
-ENTRYPOINT ["npm", "run", "start"]
-#ENTRYPOINT ["npm", "--prefix", "/app", "run", "start"]
+ENTRYPOINT ["npm", "--prefix", "/app/openfoam_cbp", "run", "start"]
