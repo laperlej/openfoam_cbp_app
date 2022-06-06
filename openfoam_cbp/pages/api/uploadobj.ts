@@ -2,10 +2,10 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import path from 'path'
 import fs from 'fs'
 import os from 'os'
-import { withLogger } from '../../lib/middlewares/withLogger'
+import { withLogger } from 'lib/middlewares/withLogger'
 import busboy from 'busboy'
-import { getDataStore } from '../../lib/session/dataStore'
-import { withSessionRoute } from '../../lib/middlewares/withSession'
+import { getDataStore } from 'lib/session/dataStore'
+import { withSessionRoute } from 'lib/middlewares/withSession'
 
 export default withSessionRoute(withLogger(handler))
 

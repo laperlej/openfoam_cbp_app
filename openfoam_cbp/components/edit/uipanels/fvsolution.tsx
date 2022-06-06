@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Save } from './utils/save'
-import { isValidFloat } from './utils/validator'
-import { CustomTextField } from '../../custom/customTextField'
+import { Save } from './utils/Save'
+import { isValidFloat } from './utils/validators'
+import { CustomTextField } from 'components/custom/CustomTextField'
 import {
   Table,
   TableBody,

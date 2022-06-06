@@ -1,5 +1,5 @@
 import React from 'react'
-import { EditPanel } from '../components/edit/editpanel'
+import { EditPanel } from 'components/edit/EditPanel'
 
 const handler = () => <EditPanel />
 

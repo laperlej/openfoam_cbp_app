@@ -1,13 +1,13 @@
 import React from 'react'
 import { useMonaco } from '@monaco-editor/react'
-import { ControlDict } from './uipanels/controldict'
-import { BlockMeshDict } from './uipanels/blockmeshdict'
-import { DecomposeParDict } from './uipanels/decomposepardict'
-import { HamTransportProperties } from './uipanels/hamtransportproperties'
-import { FvSchemes } from './uipanels/fvschemes'
-import { FvSolution } from './uipanels/fvsolution'
-import { Turbulence } from './uipanels/turbulence'
-import { Conditions } from './uipanels/conditions'
+import { ControlDict } from './uipanels/ControlDict'
+import { BlockMeshDict } from './uipanels/BlockMeshDict'
+import { DecomposeParDict } from './uipanels/DecomposeParDict'
+import { HamTransportProperties } from './uipanels/HamTransportProperties'
+import { FvSchemes } from './uipanels/FvSchemes'
+import { FvSolution } from './uipanels/FvSolution'
+import { Turbulence } from './uipanels/Turbulence'
+import { Conditions } from './uipanels/Conditions'
 
 const UIPanel = ({ project, selectedItem, data, allASTs }) => {
   const fileData = data[selectedItem]

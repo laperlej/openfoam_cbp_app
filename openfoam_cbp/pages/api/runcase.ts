@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { withSessionRoute } from '../../lib/middlewares/withSession'
-import { getDataStore } from '../../lib/session/dataStore'
-import { withLogger } from '../../lib/middlewares/withLogger'
-import { spawnCaseRunner } from '../../lib/case/caseRunner'
-import { writeCase } from '../../lib/case/caseWriter'
+import { withSessionRoute } from 'lib/middlewares/withSession'
+import { getDataStore } from 'lib/session/dataStore'
+import { withLogger } from 'lib/middlewares/withLogger'
+import { spawnCaseRunner } from 'lib/case/caseRunner'
+import { writeCase } from 'lib/case/caseWriter'
 
 export default withSessionRoute(withLogger(handler))
 

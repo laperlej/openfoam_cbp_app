@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { CustomTextField } from '../../custom/customTextField'
-import { Save } from './utils/save'
-import { isValidFloat } from './utils/validator'
+import { CustomTextField } from 'components/custom/CustomTextField'
+import { Save } from './utils/Save'
+import { isValidFloat } from './utils/validators'
 
 const Uniform1d = ({ ast }) => {
   const currentFieldValue = ast?.['internalField']?.[1]?.value

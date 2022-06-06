@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './topnav.module.css'
+import styles from './TopNav.module.css'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 

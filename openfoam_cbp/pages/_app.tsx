@@ -1,11 +1,11 @@
 import React, { useReducer, useMemo } from 'react'
-import TopNav from '../components/navbar/topnav'
-import CaseContext from '../components/casecontext'
+import TopNav from 'components/navbar/TopNav'
+import CaseContext from 'components/CaseContext'
 import { CssBaseline } from '@mui/material'
 import '../components/global.css'
 import { loader } from '@monaco-editor/react'
 import Head from 'next/head'
-import { emptyState } from '../components/emptyState'
+import { emptyState } from 'components/emptyState'
 
 loader.config({
   paths: { vs: '/monaco-editor/min/vs' }

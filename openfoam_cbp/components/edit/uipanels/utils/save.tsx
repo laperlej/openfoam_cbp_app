@@ -1,8 +1,8 @@
 import React, { useState, useRef, useContext } from 'react'
 import Button from '@mui/material/Button'
 import { useMonaco } from '@monaco-editor/react'
-import EditorContext from '../../../editorcontext'
-import { CustomAlert } from '../../../custom/customAlert'
+import EditorContext from 'components/EditorContext'
+import { CustomAlert } from 'components/custom/CustomAlert'
 
 class Highlighter {
   monaco: any

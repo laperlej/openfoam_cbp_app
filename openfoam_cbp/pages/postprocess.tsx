@@ -1,5 +1,5 @@
 import React from 'react'
-import { PostProcessPanel } from '../components/postprocess/postprocesspanel'
+import { PostProcessPanel } from 'components/postprocess/PostProcessPanel'
 
 const handler = () => <PostProcessPanel />
 

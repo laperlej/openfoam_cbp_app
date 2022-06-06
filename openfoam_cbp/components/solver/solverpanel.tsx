@@ -1,14 +1,14 @@
 import React from 'react'
 import { useState, useContext } from 'react'
 import { SelectChangeEvent } from '@mui/material/Select'
-import { SolverSelect } from './solverselect'
-import { Upload } from './upload'
+import { SolverSelect } from './SolverSelect'
+import { Upload } from './Upload'
 import axios from 'axios'
 import LoadingButton from '@mui/lab/LoadingButton'
 import { useRouter } from 'next/router'
-import CaseContext from '../casecontext'
+import CaseContext from 'components/CaseContext'
 import { useMonaco } from '@monaco-editor/react'
-import { CustomAlert } from '../custom/customAlert'
+import { CustomAlert } from 'components/custom/CustomAlert'
 
 export const SolverPanel = () => {
   const { dispatch } = useContext(CaseContext)

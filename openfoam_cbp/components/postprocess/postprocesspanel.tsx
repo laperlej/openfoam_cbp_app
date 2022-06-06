@@ -1,20 +1,19 @@
 import React, { useContext } from 'react'
 import axios from 'axios'
 import { useState, useEffect, useRef, useCallback } from 'react'
-import Parser from '../edit/uipanels/utils/parser'
-import { CustomAlert } from '../custom/customAlert'
+import Parser from 'components/edit/uipanels/utils/Parser'
 import Switch from '@mui/material/Switch'
-import { CustomSelect } from '../custom/customSelect'
-import Alert from '@mui/material/Alert'
-import Button from '@mui/material/Button'
+import { CustomSelect } from '../custom/CustomSelect'
 import LoadingButton from '@mui/lab/LoadingButton'
-import { CustomTextField } from '../custom/customTextField'
-import { isValidTime } from '../edit/uipanels/utils/validator'
-import CaseContext from '../casecontext'
-import { CustomMultiSelect } from '../custom/customMultiSelect'
+import { CustomTextField } from '../custom/CustomTextField'
+import { isValidTime } from 'components/edit/uipanels/utils/validators'
+import CaseContext from 'components/CaseContext'
+import { CustomMultiSelect } from 'components/custom/CustomMultiSelect'
 import EventSource from 'eventsource'
 import Box from '@mui/material/Box'
-import { emptyState } from '../emptyState'
+import { emptyState } from 'components/emptyState'
+import { RunStatusMessage } from './statusMessages/RunStatusMessage'
+import { PostStatusMessage } from './statusMessages/PostStatusMessage'
 
 const getFieldOptions = (solverName) => {
   switch (solverName) {
@@ -54,104 +53,16 @@ function getRegionOptions(caseFiles) {
   return meshRegions
 }
 
-const RunStatusMessage = ({ open, onClose, runStatus, postStatus }) => {
-  switch (runStatus) {
-    case 'unknown':
-      return (
-        <CustomAlert open={open} onClose={onClose} severity="info">
-          Fetching the current state of the job, please wait...
-        </CustomAlert>
-      )
-    case 'not started':
-      return (
-        <CustomAlert open={open} onClose={onClose} severity="info">
-          The solver has not started yet.
-        </CustomAlert>
-      )
-    case 'running':
-      return (
-        <CustomAlert open={open} onClose={onClose} severity="warning">
-          Waiting for the solver to finish.
-        </CustomAlert>
-      )
-    case '0':
-      switch (postStatus) {
-        case 'not started':
-          return (
-            <CustomAlert open={open} onClose={onClose} severity="success">
-              The solver has finished ! Ready to start postprocessing.
-            </CustomAlert>
-          )
-        default:
-          return (
-            <CustomAlert open={open} onClose={onClose} severity="info">
-              It is possible to run the postprocess again with different
-              settings.
-            </CustomAlert>
-          )
-      }
-    default:
-      return (
-        <CustomAlert open={open} onClose={onClose} severity="error">
-          An error occured, please review the case files and run again.
-        </CustomAlert>
-      )
-  }
-}
-
-const PostStatusMessage = ({ postStatus }) => {
-  switch (postStatus) {
-    case 'unknown':
-      return null
-    case 'not started':
-      return null
-    case 'running':
-      return (
-        <Alert severity="warning" icon={false}>
-          Please wait for the postprocessing to finish.
-          <p />
-          <LoadingButton variant="contained" disabled={true} loading={true}>
-            Click to Download
-          </LoadingButton>
-        </Alert>
-      )
-    case '0':
-      return (
-        <Alert severity="success" icon={false}>
-          Your file is ready !<p />
-          <Button
-            variant="contained"
-            onClick={() => {
-              window.location.href = `/api/download`
-            }}
-            data-testid="post-download"
-          >
-            Click to Download
-          </Button>
-        </Alert>
-      )
-    default:
-      return (
-        <Alert severity="error">
-          An error occured. Review the logs and postprocess parameters and try
-          again.
-        </Alert>
-      )
-  }
-}
-
 export const PostProcessPanel = () => {
   const { state } = useContext(CaseContext)
-  const solverName = state?.caseFiles || emptyState.solverName
+  const solverName = state?.solverName || emptyState.solverName
   const caseFiles = state?.caseFiles || emptyState.caseFiles
-  const [runStatus, setRunStatus] = useState('unkown')
-  const [postStatus, setPostStatus] = useState('unkown')
+  const [runStatus, setRunStatus] = useState('unknown')
+  const [postStatus, setPostStatus] = useState('unknown')
   const [fields, setFields] = useState([])
   const [region, setRegion] = useState('')
   const [times, setTimes] = useState('')
   const [allPatches, setAllPatches] = useState(false)
-  // eslint-disable-next-line no-unused-vars
-  const [connectionError, setConnectionError] = useState(0)
   const statusSource: React.MutableRefObject<EventSource | null> = useRef(null)
   //alerts
   const [showAlert, setShowAlert] = useState(true)
@@ -186,20 +97,24 @@ export const PostProcessPanel = () => {
   }, [statusSource, listener])
 
   const initEventSource = useCallback(() => {
-    setConnectionError(0)
+    setRunStatus('unknown')
     statusSource.current = new EventSource(
       new URL('/api/status', window.location.origin).href
     )
     statusSource.current.onerror = (err) => {
       statusSource.current.close()
       if (err.status === 401) {
-        setConnectionError(401)
+        setRunStatus('no session')
         return
       }
-      setConnectionError(1)
+      if (err.status === 400 || err.status === 502) {
+        setRunStatus('no connection')
+        return
+      }
+      setRunStatus('1')
     }
     setListeners()
-  }, [setListeners, setConnectionError])
+  }, [setListeners, setRunStatus])
 
   useEffect(() => {
     initEventSource()
@@ -218,7 +133,13 @@ export const PostProcessPanel = () => {
         })
       } catch (err) {
         if (err.response.status === 401) {
-          setPostStatus('401')
+          setPostStatus('no session')
+          setRunStatus('no session')
+          return
+        }
+        if (err.response.status === 400 || err.response.status === 502) {
+          setPostStatus('no connection')
+          setRunStatus('no connection')
           return
         }
         setPostStatus('1')

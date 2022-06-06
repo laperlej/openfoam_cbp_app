@@ -1,5 +1,5 @@
 import React from 'react'
-import { SolverPanel } from '../components/solver/solverpanel'
+import { SolverPanel } from 'components/solver/SolverPanel'
 
 const handler = () => <SolverPanel />
 

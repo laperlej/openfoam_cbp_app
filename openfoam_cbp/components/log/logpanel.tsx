@@ -1,8 +1,8 @@
 import React from 'react'
 import { useEffect, useState, useRef, useCallback } from 'react'
-import useWindowHeight from '../windowheight'
-import styles from './logpanel.module.css'
-import { CustomRetryAlert } from '../custom/customRetryAlert'
+import useWindowHeight from 'components/useWindowHeight'
+import styles from './LogPanel.module.css'
+import { CustomRetryAlert } from 'components/custom/CustomRetryAlert'
 import EventSource from 'eventsource'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
@@ -66,7 +66,9 @@ export const LogPanel = () => {
   }, [initEventSource])
 
   const scrollToBottom = () => {
-    logArea.current.scrollBy(0, logArea.current.scrollHeight + 100)
+    if (logArea.current?.scrollBy) {
+      logArea.current.scrollBy(0, logArea.current.scrollHeight + 100)
+    }
   }
 
   useEffect(() => {

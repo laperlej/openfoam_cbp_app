@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Save } from './utils/save'
-import { CustomSelect } from '../../custom/customSelect'
+import { Save } from './utils/Save'
+import { CustomSelect } from 'components/custom/CustomSelect'
 import { FormControl } from '@mui/material'
 
 const rasModels = [

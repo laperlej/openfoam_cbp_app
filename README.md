@@ -1,5 +1,6 @@
 # OpenFOAM CBP APP
 ![docker version badge](https://img.shields.io/docker/v/jlaperle/openfoam_cbp_app?color=blue&sort=semver)
+![github workflow badge](https://img.shields.io/github/workflow/status/laperlej/openfoam_cbp_app/CI/main)
 
 Web interface for the [OpenFOAM-CBP](https://gitlab.ethz.ch/openfoam-cbp) custom solvers
 
@@ -69,3 +70,13 @@ The development is done on a vagrant VM
 Run `vagrant up` from the root folder
 
 By running both dev.sh and start.sh available withing the home folder after `vagrant ssh` the app will be available at localhost:8080
+
+### Troubleshooting
+
+In the event that the server crashes due to 
+
+`WebAssembly.instantiate(): Out of memory: wasm memory` 
+
+It is usually caused by limits to virtual memory on the host system. 
+
+Use `ulimit -v unlimited`

@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
-import { Save } from './utils/save'
-import { generateMesh } from './utils/meshgenerator'
-import { isValidFloat, isValidInt } from './utils/validator'
-import { CustomSelect } from '../../custom/customSelect'
-import { CustomTable } from '../../custom/customTable'
-import CaseContext from '../../casecontext'
+import { Save } from './utils/Save'
+import { generateMesh } from './utils/generateMesh'
+import { isValidFloat, isValidInt } from './utils/validators'
+import { CustomSelect } from 'components/custom/CustomSelect'
+import { CustomTable } from 'components/custom/CustomTable'
+import CaseContext from 'components/CaseContext'
 
 const BlockMeshDictBackground = ({ ast, editABL }) => {
   const [rows, setRows] = useState([

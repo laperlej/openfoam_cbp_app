@@ -1,6 +1,6 @@
 import React from 'react'
 import FormControl from '@mui/material/FormControl'
-import { CustomSelect } from '../custom/customSelect'
+import { CustomSelect } from 'components/custom/CustomSelect'
 
 const options = ['hamFoam', 'urbanMicroclimateFoam', 'windDrivenRainFoam']
 

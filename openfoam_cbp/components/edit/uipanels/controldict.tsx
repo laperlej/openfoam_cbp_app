@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Save } from './utils/save'
-import { CustomTextField } from '../../custom/customTextField'
-import { isValidInt } from './utils/validator'
+import { Save } from './utils/Save'
+import { CustomTextField } from 'components/custom/CustomTextField'
+import { isValidInt } from './utils/validators'
 
 export const ControlDict = ({ ast }) => {
   const [startTime, setStartTime] = useState(

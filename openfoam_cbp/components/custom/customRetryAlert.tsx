@@ -14,6 +14,7 @@ interface Props {
   style?: {}
   severity?: AlertColor
   children?
+  'data-testid'?: string | null
 }
 
 export const CustomRetryAlert: React.FC<Props> = ({
@@ -21,7 +22,8 @@ export const CustomRetryAlert: React.FC<Props> = ({
   onClose = () => null,
   style = {},
   severity = 'info',
-  children = <></>
+  children = <></>,
+  'data-testid': dataTestId = null
 }) => {
   const retryButton = (
     <Button size="small" aria-label="retry" color="inherit" onClick={onClose}>
@@ -36,7 +38,12 @@ export const CustomRetryAlert: React.FC<Props> = ({
       TransitionComponent={TransitionUp}
       key={TransitionUp ? TransitionUp.name : ''}
     >
-      <Alert variant={'filled'} severity={severity} action={retryButton}>
+      <Alert
+        variant={'filled'}
+        severity={severity}
+        action={retryButton}
+        data-testid={dataTestId}
+      >
         {children}
       </Alert>
     </Snackbar>

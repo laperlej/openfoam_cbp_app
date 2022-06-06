@@ -1,5 +1,5 @@
 import React from 'react'
-import { HelpPanel } from '../components/help/helppanel'
+import { HelpPanel } from 'components/help/HelpPanel'
 
 const Help = () => <HelpPanel />
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { LogPanel } from '../components/log/logpanel'
+import { LogPanel } from 'components/log/LogPanel'
 
 const handler = () => <LogPanel />
 

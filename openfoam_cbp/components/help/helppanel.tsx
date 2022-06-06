@@ -1,6 +1,6 @@
 import React from 'react'
 import HelpMdx from './help.mdx'
-import styles from './helppanel.module.css'
+import styles from './HelpPanel.module.css'
 
 export const HelpPanel = () => {
   return (

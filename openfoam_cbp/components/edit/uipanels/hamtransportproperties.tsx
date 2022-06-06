@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Save } from './utils/save'
-import { isValidFloat, isValidInt } from './utils/validator'
-import { CustomTable } from '../../custom/customTable'
+import { Save } from './utils/Save'
+import { isValidFloat, isValidInt } from './utils/validators'
+import { CustomTable } from 'components/custom/CustomTable'
 
 const materialChoices = [
   'AcrylicPaint',

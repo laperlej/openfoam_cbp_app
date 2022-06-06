@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { EditPanel } from '../components/edit/editpanel'
-import { warningFilter } from '../lib/warningfilter'
+import { EditPanel } from '../EditPanel'
+import { warningFilter } from 'lib/warningfilter'
 
 const originalWarn = console.warn.bind(console.warn)
 beforeAll(() => {

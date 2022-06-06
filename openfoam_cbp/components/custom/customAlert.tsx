@@ -15,6 +15,7 @@ interface Props {
   style?: {}
   severity?: AlertColor
   children?
+  'data-testid'?: string | null
 }
 
 export const CustomAlert: React.FC<Props> = ({
@@ -22,7 +23,8 @@ export const CustomAlert: React.FC<Props> = ({
   onClose = () => null,
   style = {},
   severity = 'info',
-  children = <></>
+  children = <></>,
+  'data-testid': dataTestId = null
 }) => {
   const closeButton = (
     <IconButton
@@ -43,7 +45,12 @@ export const CustomAlert: React.FC<Props> = ({
       TransitionComponent={TransitionUp}
       key={TransitionUp ? TransitionUp.name : ''}
     >
-      <Alert variant={'filled'} severity={severity} action={closeButton}>
+      <Alert
+        variant={'filled'}
+        severity={severity}
+        action={closeButton}
+        data-testid={dataTestId}
+      >
         {children}
       </Alert>
     </Snackbar>

@@ -1,8 +1,8 @@
-import { collectLogs } from '../../lib/logs/logcollector'
+import { collectLogs } from 'lib/logs/logcollector'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { withSessionRoute } from '../../lib/middlewares/withSession'
-import { getDataStore } from '../../lib/session/dataStore'
-import { withLogger } from '../../lib/middlewares/withLogger'
+import { withSessionRoute } from 'lib/middlewares/withSession'
+import { getDataStore } from 'lib/session/dataStore'
+import { withLogger } from 'lib/middlewares/withLogger'
 
 export default withSessionRoute(withLogger(handler))
 

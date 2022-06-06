@@ -4,8 +4,8 @@ import axios from 'axios'
 import LoadingButton from '@mui/lab/LoadingButton'
 import Switch from '@mui/material/Switch'
 import { useRouter } from 'next/router'
-import CaseContext from '../casecontext'
-import { CustomAlert } from '../custom/customAlert'
+import CaseContext from 'components/CaseContext'
+import { CustomAlert } from 'components/custom/CustomAlert'
 
 export const RunPanel = () => {
   const { state } = useContext(CaseContext)

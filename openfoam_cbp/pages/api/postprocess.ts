@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { withSessionRoute } from '../../lib/middlewares/withSession'
-import { getDataStore } from '../../lib/session/dataStore'
-import { withLogger } from '../../lib/middlewares/withLogger'
-import { buildCmd, spawnVtkRunner } from '../../lib/postprocess/vtkrunner'
+import { withSessionRoute } from 'lib/middlewares/withSession'
+import { getDataStore } from 'lib/session/dataStore'
+import { withLogger } from 'lib/middlewares/withLogger'
+import { buildCmd, spawnVtkRunner } from 'lib/postprocess/vtkrunner'
 
 export default withSessionRoute(withLogger(handler))
 

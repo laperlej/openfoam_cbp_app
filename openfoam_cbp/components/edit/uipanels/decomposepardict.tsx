@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Save } from './utils/save'
-import { isValidNonZero2Digit } from './utils/validator'
-import { CustomTextField } from '../../custom/customTextField'
-import { CustomSelect } from '../../custom/customSelect'
+import { Save } from './utils/Save'
+import { isValidNonZero2Digit } from './utils/validators'
+import { CustomTextField } from 'components/custom/CustomTextField'
+import { CustomSelect } from 'components/custom/CustomSelect'
 
 export const DecomposeParDict = ({ ast }) => {
   const [method, setMethod] = useState(ast?.['method']?.[0]?.value || 'scotch')
