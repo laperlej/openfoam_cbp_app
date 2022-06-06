@@ -7,6 +7,7 @@ FROM node:17 AS builder
 COPY ./openfoam_cbp /app/openfoam_cbp
 COPY --from=deps /app/openfoam_cbp/node_modules /app/openfoam_cbp/node_modules
 WORKDIR /app/openfoam_cbp
+RUN npm run test
 RUN npm run build
 
 FROM openfoam/openfoam6-graphical-apps AS runner
