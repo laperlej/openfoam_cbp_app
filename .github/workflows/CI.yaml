@@ -1,22 +1,22 @@
-name: CI / Test
+name: CI
 
 on:
   push:
-    branches: ["main"]
+    branches: "**"
+    tags: "v*"
   pull_request:
-    branches: ["main"]
+    branches: "**"
 
 jobs:
-  test:
-    name: Test
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: install deps
-        run: docker build . --file test.Dockerfile --tag openfoam_ci
+      - name: Build
+        run: docker build . -f test.Dockerfile -t "test/test:test"
 
-      - name: Run tests
-        run: docker run --rm openfoam_ci
+      - name: Unit Tests
+        run: docker run test/test:test
