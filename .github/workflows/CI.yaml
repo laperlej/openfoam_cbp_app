@@ -19,4 +19,4 @@ jobs:
         run: docker build . --file test.Dockerfile --tag openfoam_ci
 
       - name: Run tests
-        run: docker run --rm -it openfoam_ci
+        run: docker run --rm openfoam_ci
