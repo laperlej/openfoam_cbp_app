@@ -1,6 +1,6 @@
 # OpenFOAM CBP APP
-![docker version badge](https://img.shields.io/docker/v/jlaperle/openfoam_cbp_app?color=blue&sort=semver)
-![github workflow badge](https://img.shields.io/github/workflow/status/laperlej/openfoam_cbp_app/CI/main)
+![docker version badge](https://img.shields.io/docker/v/jlaperle/openfoam_cbp_app?color=blue&sort=semver&dummy=unused)
+![github workflow badge](https://img.shields.io/github/workflow/status/laperlej/openfoam_cbp_app/CI/main?dummy=unused)
 
 Web interface for the [OpenFOAM-CBP](https://gitlab.ethz.ch/openfoam-cbp) custom solvers
 
