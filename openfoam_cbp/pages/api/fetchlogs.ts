@@ -18,7 +18,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     Connection: 'keep-alive',
     'Content-Type': 'text/event-stream',
     'Content-Encoding': 'none',
-    'Cache-Control': 'no-cache'
+    'Cache-Control': 'no-cache',
+    'X-Accel-Buffering': 'no'
     //'Accept-Encoding': 'none'
     //'Access-Control-Allow-Origin': '*'
   })

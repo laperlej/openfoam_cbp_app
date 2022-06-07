@@ -17,7 +17,6 @@ jobs:
         with:
           images: |
             jlaperle/openfoam_cbp_app
-            jlaperle/tmp
           tags: |
             type=semver,pattern={{version}}
 

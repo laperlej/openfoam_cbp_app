@@ -18,27 +18,29 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     'Content-Type': 'text/event-stream',
     'Content-Encoding': 'none',
     'Cache-Control': 'no-cache',
-    'Accept-Encoding': 'none'
+    'X-Accel-Buffering': 'no'
+    //'Accept-Encoding': 'none'
     //'Access-Control-Allow-Origin': '*'
   })
 
   let intervalID = null
 
-  session.runStatusListener.subscribe(session.id, res)
-  session.postStatusListener.subscribe(session.id, res)
+  //session.runStatusListener.subscribe(session.id, res)
+  //session.postStatusListener.subscribe(session.id, res)
   const end = () => {
     if (intervalID) {
       clearTimeout(intervalID)
     }
-    session.runStatusListener.unSubscribe(session.id)
-    session.postStatusListener.unSubscribe(session.id)
+    //session.runStatusListener.unSubscribe(session.id)
+    //session.postStatusListener.unSubscribe(session.id)
   }
   req.on('aborted', end)
   req.on('close', end)
 
+  let id = 1
   const sendData = () => {
-    session.runStatusListener.updateAll()
-    session.postStatusListener.updateAll()
+    res.write(`id: ${id++}\n${session.runStatusListener.updateMessage()}`)
+    res.write(`id: ${id++}\n${session.postStatusListener.updateMessage()}`)
   }
 
   intervalID = setInterval(sendData, 1000)
