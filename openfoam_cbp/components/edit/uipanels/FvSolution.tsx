@@ -1,102 +1,85 @@
 import React, { useState } from 'react'
 import { Save } from './utils/Save'
 import { isValidFloat } from './utils/validators'
-import { CustomTextField } from 'components/custom/CustomTextField'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper
-} from '@mui/material'
+import { CustomTable } from 'components/custom/CustomTable'
+import { range } from './utils/range'
 
-export const FvSolution = ({ ast }) => {
+function init_rows(ast) {
   const variable = Object.keys(ast?.['solvers']) || []
-  const [tolerance, setTolerance] = useState(
-    Object.values(ast?.['solvers']).map(
-      (varInfo) => varInfo?.['tolerance']?.[0]?.value
-    )
-  )
-  const [relTol, setRelTol] = useState(
-    Object.values(ast?.['solvers']).map(
-      (varInfo) => varInfo?.['relTol']?.[0]?.value
-    )
-  )
   const nbLayers = variable.length || 0
 
-  function handleTolChange(event, layer) {
-    let newArray = [...tolerance]
-    newArray[layer] = event.target.value
-    setTolerance(newArray)
-  }
-  function handleRelTolChange(event, layer) {
-    let newArray = [...relTol]
-    newArray[layer] = event.target.value
-    setRelTol(newArray)
-  }
+  const tolerance = Object.values(ast?.['solvers']).map(
+    (varInfo) => varInfo?.['tolerance']?.[0]?.value
+  )
+  const relTol = Object.values(ast?.['solvers']).map(
+    (varInfo) => varInfo?.['relTol']?.[0]?.value
+  )
+
+  let rows = range(1, nbLayers + 1).map((i) => {
+    return {
+      id: i,
+      var: variable[i - 1],
+      tol: tolerance[i - 1],
+      relTol: relTol[i - 1]
+    }
+  })
+  return rows
+}
+
+export const FvSolution = ({ ast }) => {
+  const [rows, setRows] = useState(init_rows(ast))
+  const columns = [
+    {
+      field: 'var',
+      headerName: 'Variable',
+      editable: false,
+      width: 100
+    },
+    {
+      field: 'tol',
+      headerName: 'Tolerance',
+      editable: true,
+      width: 150,
+      validate: isValidFloat
+    },
+    {
+      field: 'relTol',
+      headerName: 'Relative',
+      editable: true,
+      width: 150,
+      validate: isValidFloat
+    }
+  ]
 
   let vars = []
-  for (let i = 0; i < nbLayers; i++) {
+  for (let i = 0; i < rows.length; i++) {
     vars.push({
       foamObj: Object.values(ast?.['solvers'])?.[i]?.['tolerance']?.[0],
-      newValue: tolerance[i]
+      newValue: rows[i].tol
     })
     vars.push({
       foamObj: Object.values(ast?.['solvers'])?.[i]?.['relTol']?.[0],
-      newValue: relTol[i]
+      newValue: rows[i].relTol
     })
   }
-
-  function layerForms() {
-    let layers = []
-    for (let i = 0; i < nbLayers; i++) {
-      layers.push(
-        <TableRow key={i}>
-          <TableCell style={{ textAlign: 'center' }}>{variable[i]}</TableCell>
-          <TableCell>
-            <CustomTextField
-              style={{ width: '90px' }}
-              value={tolerance[i]}
-              validationFn={isValidFloat}
-              onChange={(event) => handleTolChange(event, i)}
-            />
-          </TableCell>
-          <TableCell>
-            <CustomTextField
-              style={{ width: '90px' }}
-              value={relTol[i]}
-              validationFn={isValidFloat}
-              onChange={(event) => handleRelTolChange(event, i)}
-            />
-          </TableCell>
-        </TableRow>
-      )
-    }
-    return layers
-  }
   function validate() {
-    return tolerance.every(isValidFloat) && relTol.every(isValidFloat)
+    return (
+      rows.map((row) => row.tol).every(isValidFloat) &&
+      rows.map((row) => row.relTol).every(isValidFloat)
+    )
   }
   return (
     <>
       <p />
       <h3>Convergence Criteria</h3>
       <p />
+      <CustomTable
+        width={350}
+        rows={rows}
+        columns={columns}
+        setRows={setRows}
+      />
       <p />
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Variable</TableCell>
-              <TableCell>Tolerance</TableCell>
-              <TableCell>Relative</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>{layerForms()}</TableBody>
-        </Table>
-      </TableContainer>
       <Save vars={vars} isValid={validate()} />
     </>
   )

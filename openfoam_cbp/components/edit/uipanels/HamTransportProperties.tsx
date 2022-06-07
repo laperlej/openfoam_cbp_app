@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Save } from './utils/Save'
 import { isValidFloat, isValidInt } from './utils/validators'
 import { CustomTable } from 'components/custom/CustomTable'
+import { range } from './utils/range'
 
 const materialChoices = [
   'AcrylicPaint',
@@ -24,10 +25,6 @@ const materialChoices = [
   'VanGenuchtenVapDiff',
   'VWC'
 ]
-
-function range(start, end): Array<number> {
-  return Array.from(Array(end).keys()).slice(start)
-}
 
 function init_rows(ast) {
   const nbLayers = ast?.['buildingMaterials']?.value?.length || 0

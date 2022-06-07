@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 
-export const CustomTable = ({ rows, columns, setRows }) => {
+export const CustomTable = ({ rows, columns, setRows, width = 500 }) => {
   function onChange(params, event) {
     setRows(
       rows.map((row) =>
@@ -96,7 +96,7 @@ export const CustomTable = ({ rows, columns, setRows }) => {
     <TableContainer>
       <Table
         style={{ margin: 'auto', textAlign: 'center' }}
-        sx={{ align: 'center', width: 500 }}
+        sx={{ align: 'center', width: width }}
       >
         <TableHead>{headerCells()}</TableHead>
         <TableBody>{rows.map((row) => rowCells(row))}</TableBody>
