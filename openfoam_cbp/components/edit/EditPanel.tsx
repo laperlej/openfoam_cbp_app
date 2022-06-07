@@ -20,7 +20,7 @@ import { emptyState } from 'components/emptyState'
 
 export const EditPanel = () => {
   const { state } = useContext(CaseContext)
-  const solverName = state?.caseFiles || emptyState.solverName
+  const solverName = state?.solverName || emptyState.solverName
   const caseFiles = state?.caseFiles || emptyState.caseFiles
   const monaco = useMonaco()
   const [editor, setEditor] = useState(null)
@@ -117,7 +117,7 @@ export const EditPanel = () => {
         <div className={'pane-content'}>
           <EditorContext.Provider value={editor}>
             <UIPanel
-              project={solverName}
+              solverName={solverName}
               selectedItem={selectedItem.current}
               data={caseFiles}
               allASTs={allASTs}

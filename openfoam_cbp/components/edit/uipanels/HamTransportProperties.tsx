@@ -145,13 +145,13 @@ export const HamTransportProperties = ({ ast }) => {
     )
   }
   return (
-    <>
+    <div data-testid="ham-transport-properties">
       <p />
       <h3>Materials configuration</h3>
       <p />
       <CustomTable rows={rows} columns={columns} setRows={setRows} />
       <p />
       <Save vars={vars} isValid={validate()} />
-    </>
+    </div>
   )
 }

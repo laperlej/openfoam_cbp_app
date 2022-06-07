@@ -13,8 +13,19 @@ class StatusListener {
     }
   }
 
+  updateAll() {
+    for (const id in this.subscribers) {
+      this.send(id)
+    }
+  }
+
   updateMessage() {
     return `event: status\ndata: ${this.currentStatus}\n\n`
+  }
+
+  send(id) {
+    this.subscribers[id].lastKnown = this.currentStatus
+    this.subscribers[id].res.write(this.updateMessage())
   }
 
   sendIfUpdate(id) {

@@ -1,22 +1,15 @@
 import React from 'react'
 import { useMonaco } from '@monaco-editor/react'
-import { ControlDict } from './uipanels/ControlDict'
-import { BlockMeshDict } from './uipanels/BlockMeshDict'
-import { DecomposeParDict } from './uipanels/DecomposeParDict'
-import { HamTransportProperties } from './uipanels/HamTransportProperties'
-import { FvSchemes } from './uipanels/FvSchemes'
-import { FvSolution } from './uipanels/FvSolution'
-import { Turbulence } from './uipanels/Turbulence'
-import { Conditions } from './uipanels/Conditions'
+import { UIDictionary } from './UIDictionary'
 
-const UIPanel = ({ project, selectedItem, data, allASTs }) => {
+const UIPanel = ({ solverName, selectedItem, data, allASTs }) => {
   const fileData = data[selectedItem]
   const ast = allASTs[fileData['index']]
   const fileName = fileData['data']
   const monaco = useMonaco()
   function editABLConditons(newValue) {
     const index =
-      project == 'urbanMicroclimateFoam'
+      solverName === 'urbanMicroclimateFoam'
         ? '0/air/include/ABLConditions'
         : 'simpleFoam/0/include/ABLConditions'
     for (const model of monaco.editor.getModels()) {
@@ -67,53 +60,20 @@ const UIPanel = ({ project, selectedItem, data, allASTs }) => {
     data[indexSetSet]['text'] = newSetSet.join('\n')
     data[indexTransportProperties]['text'] = newTransportProperties.join('\n')
   }
-
-  const uiDictionary = (filename) => {
-    switch (filename) {
-      case 'Allclean':
-      case 'Allrun':
-      case 'Allprepare':
-      case 'reconstructScript':
-      case 'setset.batch':
-      case 'buildings.obj':
-        return (
-          <>
-            <br />
-            This file will be adjusted automatically.
-            <br />
-            It cannot be edited manually.
-          </>
-        )
-      case 'controlDict':
-        return <ControlDict key={fileData['index']} ast={ast} />
-      case 'decomposeParDict':
-        return <DecomposeParDict key={fileData['index']} ast={ast} />
-      case 'blockMeshDict':
-        return (
-          <BlockMeshDict
-            key={fileData['index']}
-            editMaterials={editMaterials}
-            editABL={editABLConditons}
-            ast={ast}
-          />
-        )
-      case 'transportProperties':
-        return project === 'hamFoam' ? (
-          <HamTransportProperties key={fileData['index']} ast={ast} />
-        ) : null
-      case 'fvSchemes':
-        return <FvSchemes key={fileData['index']} />
-      case 'fvSolution':
-        return <FvSolution key={fileData['index']} ast={ast} />
-      case 'turbulenceProperties':
-        return <Turbulence key={fileData['index']} ast={ast} />
-      default:
-        return (
-          <Conditions key={fileData['index']} fileData={fileData} ast={ast} />
-        )
-    }
-  }
-  return <div className={'centered'}>{uiDictionary(fileName) || null}</div>
+  return (
+    <div className={'centered'}>
+      {(
+        <UIDictionary
+          solverName={solverName}
+          editMaterials={editMaterials}
+          fileName={fileName}
+          fileData={fileData}
+          ast={ast}
+          editABLConditons={editABLConditons}
+        />
+      ) || null}
+    </div>
+  )
 }
 
 export default UIPanel

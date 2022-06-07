@@ -38,7 +38,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const logs = collectLogs(session.caseDir, session.solver)
     if (logs !== lastUpdate) {
       res.write(`id: ${id++}\nevent: log\ndata: ${JSON.stringify(logs)}\n\n`)
-      lastUpdate = logs
+      //lastUpdate = logs
     }
   }
 
