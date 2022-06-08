@@ -33,35 +33,25 @@ Run singularrity on the .sif file
 `singularity run openfoam_cbp_app.sif`
 
 ### Compute Canada
-Compute Canada can run singularity containers
+Compute Canada HPC servers can run singularity containers
+
+First load the singularity module
 
 `module load singularity/3.8`
 
-The following script will load the appropriate modules, start the server and setup a tunnel through a proxy accessible from Compute Canada compute nodes. Run it on a compute node.
+Start the job, <sif> is the path to the .sif file, adjust the values for cpu, memory and time based on your needs
 
-Put this code in a .sh file
+`sbatch --time='10:00:00' --mem 8192 -c 8 --wrap 'singularity run <sif>'`
 
-```
-SIF_FILE=$1
-. /cvmfs/soft.computecanada.ca/config/profile/bash.sh
-module load singularity/3.8
+Your job should be assigned a node, displayed under NODELIST
 
-ssh -fo ExitOnForwardFailure=yes -N -R /home/$USER/python3000.sock:localhost:3000 $ssh_opt -p 22004 proxy-east01.genap.ca
-PID=$(pgrep -f 'python3000.sock:')
-trap "kill $PID" EXIT
-echo "OpenFOAM interface is now available at this URL"
-echo "https://$USER-python3000.proxy-east01.genap.ca/"
+`squeue -u $USER`
 
-singularity run $1
-```
+In your local terminal, run the following command where <node> is the name of the compute node
 
-Then pass the .sif file as a parameter
+`ssh -N -L 3000:<node>:3000 <user>@<server>`
 
-`sh my_script.sh openfoam_cbp_app.sif`
-
-If running remotely make sure to look at the output file once the job has started to find which URL to open in your browser. Or just go directly to
-
-`https://$USER-python3000.proxy-east01.genap.ca/`
+In your browser, navigate to `http://localhost:3000`
 
 ### Development
 
