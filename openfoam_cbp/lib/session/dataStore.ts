@@ -49,8 +49,7 @@ export function getDataStore() {
   return DataStore.getInstance()
 }
 
-process.on('uncaughtException', (err) => {
-  console.log(err)
+process.on('uncaughtException', () => {
   getDataStore().deleteAllSessions()
   process.exit()
 })

@@ -28,8 +28,6 @@ export const Upload = ({
       .post('/api/uploadobj', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
         onUploadProgress: (data) => {
-          console.log(data.loaded)
-          console.log(data.total)
           setProgress(Math.round((100 * data.loaded) / data.total))
         }
       })

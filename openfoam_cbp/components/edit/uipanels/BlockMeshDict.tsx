@@ -63,7 +63,6 @@ const BlockMeshDictBackground = ({ ast, editABL }) => {
     }
   })
   const validate = () => {
-    console.log(vars)
     return (
       vars.slice(0, 6).every((x) => isValidFloat(x.newValue)) &&
       vars.slice(6).every((x) => isValidInt(x.newValue))
