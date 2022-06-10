@@ -9,6 +9,8 @@ COPY --from=deps /app/openfoam_cbp/node_modules /app/openfoam_cbp/node_modules
 WORKDIR /app/openfoam_cbp
 ENV STANDALONE true
 RUN npm run build
+ENTRYPOINT [ "npm" ]
+CMD ["run", "test"]
 
 FROM jlaperle/openfoam_cbp:0.2.0 AS runner
 SHELL ["/bin/bash", "-c"]
