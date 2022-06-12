@@ -69,22 +69,23 @@ export const SolverPanel = () => {
           text-align: center;
         }
       `}</style>
-      <p />
       <h2>Select a solver</h2>
-      <p />
-      <SolverSelect value={solver} onChange={onChange} />
-      <p />
+      <p>
+        <SolverSelect value={solver} onChange={onChange} />
+      </p>
       {solver && solver != 'hamFoam' ? (
         <>
-          <span>Upload an obj file (optional)</span>
-          <p />
-          <Upload
-            accept=".obj"
-            setObjFile={setObjFile}
-            onUploadFinish={onUploadFinish}
-            setIsUploading={setIsUploading}
-          />
-          <p />
+          <p>
+            <span>Upload an obj file (optional)</span>
+          </p>
+          <p>
+            <Upload
+              accept=".obj"
+              setObjFile={setObjFile}
+              onUploadFinish={onUploadFinish}
+              setIsUploading={setIsUploading}
+            />
+          </p>
         </>
       ) : null}
       <LoadingButton

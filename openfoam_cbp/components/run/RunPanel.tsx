@@ -43,24 +43,25 @@ export const RunPanel = () => {
   }
   return (
     <div className={'centered'}>
-      <p />
-      Use multiple processors
-      <br />
-      <Switch onChange={onMultiProcessingToggle} />
-      <p />
+      <p>
+        <span>Use multiple processors</span>
+        <br />
+        <Switch onChange={onMultiProcessingToggle} />
+      </p>
       {multiProcessing ? (
         <div>
-          Reconstruct only the lastest time
-          <br />
-          <Switch defaultChecked onChange={onLatestTimeToggle} />
-          <p />
-          <b>Important</b>:{' '}
-          <i>
-            Be sure to adjust the decomposeParDict file(s) in the system
-            folder(s).
-          </i>
-          <br />
-          <br />
+          <p>
+            <span>Reconstruct only the lastest time</span>
+            <br />
+            <Switch defaultChecked onChange={onLatestTimeToggle} />
+          </p>
+          <p>
+            <b>Important</b>:{' '}
+            <i>
+              Be sure to adjust the decomposeParDict file(s) in the system
+              folder(s).
+            </i>
+          </p>
         </div>
       ) : null}
       <LoadingButton
