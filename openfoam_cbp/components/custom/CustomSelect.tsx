@@ -11,6 +11,7 @@ interface Props {
   onChange?: (_: any) => void
   style?: {}
   'data-testid'?: string | null
+  allowEmpty?: boolean
 }
 
 export const CustomSelect: React.FC<Props> = ({
@@ -18,9 +19,23 @@ export const CustomSelect: React.FC<Props> = ({
   label = '',
   options,
   style = {},
+  allowEmpty = false,
   onChange = (_) => null,
   'data-testid': dataTestId = null
 }) => {
+  let menuItems = options.map((name) => (
+    <MenuItem key={name} value={name}>
+      {name}
+    </MenuItem>
+  ))
+  if (allowEmpty) {
+    menuItems = [
+      <MenuItem key={'none'} value={''}>
+        {<em>none</em>}
+      </MenuItem>,
+      ...menuItems
+    ]
+  }
   return (
     <FormControl size="small">
       <InputLabel id="select-label">{label}</InputLabel>
@@ -34,11 +49,7 @@ export const CustomSelect: React.FC<Props> = ({
           'data-testid': dataTestId
         }}
       >
-        {options.map((name) => (
-          <MenuItem key={name} value={name}>
-            {name}
-          </MenuItem>
-        ))}
+        {menuItems}
       </Select>
     </FormControl>
   )

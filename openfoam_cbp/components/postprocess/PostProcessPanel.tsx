@@ -155,66 +155,71 @@ export const PostProcessPanel = () => {
 
   return (
     <div className={'centered'}>
-      <p />
       <h1 style={{ marginTop: '0px' }}>Postprocessing Options</h1>
-      <p />
-      Select one or many fields to include (optional)
-      <br />
-      <span style={{ color: '#CCCCCC' }}>
-        Leave empty to include all fields
-      </span>
-      <p />
-      <CustomMultiSelect
-        value={fields}
-        label="Fields"
-        options={getFieldOptions(solverName)}
-        onChange={(event) => setFields(event.target.value)}
-      />
-      <p />
+      <p>
+        Select one or many fields to include (optional)
+        <br />
+        <span style={{ color: '#CCCCCC' }}>
+          Leave empty to include all fields
+        </span>
+        <br />
+        <CustomMultiSelect
+          value={fields}
+          label="Fields"
+          options={getFieldOptions(solverName)}
+          onChange={(event) => setFields(event.target.value)}
+        />
+      </p>
       {caseFiles['constant/regionProperties'] && (
-        <>
+        <p>
           Specify alternative mesh region (optional)
-          <p />
+          <br />
           <CustomSelect
-            style={{ width: '200px' }}
+            style={{ width: '200px', textAlign: 'left' }}
             onChange={(event) => setRegion(event.target.value)}
             label={'Region'}
+            value={region}
             options={getRegionOptions(caseFiles)}
+            data-testid="post-region-select"
+            allowEmpty={true}
           />
-          <p />
-        </>
+        </p>
       )}
-      Select which times to include (optional)
-      <br />
-      <span style={{ color: '#CCCCCC' }}>Leave empty to include all times</span>
-      <br />
-      <span style={{ color: '#CCCCCC' }}>
-        comma-separated time ranges - eg, &apos;0:10,20,40:70,1000:&apos;
-      </span>
-      <br />
-      <CustomTextField
-        value={times}
-        style={{ width: '200px' }}
-        label={'Times'}
-        validationFn={isValidTime}
-        onChange={(event) => setTimes(event.target.value)}
-      />
-      <br />
-      <p />
-      Combine all patches into a single file
-      <br />
-      <Switch onChange={toggleAllPatches} />
-      <p />
-      <LoadingButton
-        variant="contained"
-        onClick={runPostprocess}
-        loading={runStatus == 'running'}
-        disabled={runStatus !== '0' || !isValidTime(times)}
-        data-testid="post-start"
-      >
-        Run Postprocess
-      </LoadingButton>
-      <p />
+      <p>
+        Select which times to include (optional)
+        <br />
+        <span style={{ color: '#CCCCCC' }}>
+          Leave empty to include all times
+        </span>
+        <br />
+        <span style={{ color: '#CCCCCC' }}>
+          comma-separated time ranges - eg, &apos;0:10,20,40:70,1000:&apos;
+        </span>
+        <br />
+        <CustomTextField
+          value={times}
+          style={{ width: '200px' }}
+          label={'Times'}
+          validationFn={isValidTime}
+          onChange={(event) => setTimes(event.target.value)}
+        />
+      </p>
+      <p>
+        Combine all patches into a single file
+        <br />
+        <Switch onChange={toggleAllPatches} />
+      </p>
+      <p>
+        <LoadingButton
+          variant="contained"
+          onClick={runPostprocess}
+          loading={runStatus == 'running'}
+          disabled={runStatus !== '0' || !isValidTime(times)}
+          data-testid="post-start"
+        >
+          Run Postprocess
+        </LoadingButton>
+      </p>
       <RunStatusMessage
         open={showAlert}
         onClose={() => setShowAlert(false)}
@@ -226,10 +231,6 @@ export const PostProcessPanel = () => {
       >
         <PostStatusMessage postStatus={postStatus} />
       </Box>
-      <br />
-      <br />
-      <br />
-      <br />
     </div>
   )
 }
